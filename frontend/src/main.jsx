@@ -4,12 +4,13 @@ import "./index.css";
 import App from "./App.jsx";
 import theme from "./theme.js";
 import { ThemeProvider, CssBaseline, Box } from "@mui/material";
+import Cursor from "./utilities/Cursor/index.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-
+      <Cursor />
       <Box
         sx={{
           minHeight: "100vh",
