@@ -13,8 +13,14 @@ import {
   ListItemText,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import { Link } from "react-scroll";
 
-const navItems = ["Home", "Projects", "About", "Contact"];
+const navItems = [
+  { label: "Home", id: "home" },
+  { label: "Projects", id: "projects" },
+  { label: "About", id: "about" },
+  { label: "Contact", id: "contact" },
+];
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -37,15 +43,22 @@ export default function Navbar() {
       </Typography>
       <List>
         {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
-            <ListItemButton
-              sx={{
-                textAlign: "center",
-                color: "#fff",
-                "&:hover": { color: "#00ffff" },
-              }}
-            >
-              <ListItemText primary={item} />
+          <ListItem key={item.id} disablePadding>
+            <ListItemButton sx={{ textAlign: "center" }}>
+              <Link
+                to={item.id}
+                offset={-70} // adjusts for fixed navbar height
+                style={{
+                  width: "100%",
+                  display: "block",
+                  textDecoration: "none",
+                  color: "#fff",
+                  cursor: "pointer",
+                }}
+                activeClass="active"
+              >
+                <ListItemText primary={item.label} />
+              </Link>
             </ListItemButton>
           </ListItem>
         ))}
@@ -63,7 +76,7 @@ export default function Navbar() {
           left: 0,
           px: 3,
           width: "100%",
-          background: "rgba(255, 255, 255, 0.05)", // glassy
+          background: "rgba(255, 255, 255, 0.05)",
           backdropFilter: "blur(10px)",
           WebkitBackdropFilter: "blur(10px)",
           borderBottom: "1px solid rgba(255, 255, 255, 0.2)",
@@ -88,16 +101,26 @@ export default function Navbar() {
           {/* Desktop Menu */}
           <Box sx={{ display: { xs: "none", sm: "flex" }, gap: 2 }}>
             {navItems.map((item) => (
-              <Button
-                key={item}
-                color="inherit"
-                sx={{
-                  "&:hover": { color: "#00ffff" }, // neon hover
-                  transition: "0.3s",
+              <Link
+                key={item.id}
+                to={item.id}
+                offset={-70}
+                style={{
+                  textDecoration: "none",
+                  color: "inherit",
+                  cursor: "pointer",
                 }}
               >
-                {item}
-              </Button>
+                <Button
+                  color="inherit"
+                  sx={{
+                    "&:hover": { color: "#00ffff" },
+                    transition: "0.3s",
+                  }}
+                >
+                  {item.label}
+                </Button>
+              </Link>
             ))}
           </Box>
 
