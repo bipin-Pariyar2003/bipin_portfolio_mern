@@ -48,6 +48,7 @@ export default function Navbar() {
               <Link
                 to={item.id}
                 offset={-70} // adjusts for fixed navbar height
+                onClick={handleDrawerToggle}
                 style={{
                   width: "100%",
                   display: "block",
