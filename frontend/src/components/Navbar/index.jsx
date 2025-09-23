@@ -13,7 +13,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Link } from "react-scroll";
+import { Link, scroller } from "react-scroll";
 
 const navItems = [
   { label: "Home", id: "home" },
@@ -25,13 +25,19 @@ const navItems = [
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
+  const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
+
+  const scrollToSection = (id) => {
+    scroller.scrollTo(id, {
+      smooth: true,
+      offset: -70,
+      duration: 500,
+    });
+    setMobileOpen(false); // close drawer on mobile click
   };
 
   const drawer = (
     <Box
-      onClick={handleDrawerToggle}
       sx={{
         textAlign: "center",
         background: "rgba(0,0,0,0.95)",
@@ -44,22 +50,16 @@ export default function Navbar() {
       <List>
         {navItems.map((item) => (
           <ListItem key={item.id} disablePadding>
-            <ListItemButton sx={{ textAlign: "center" }}>
-              <Link
-                to={item.id}
-                offset={-70} // adjusts for fixed navbar height
-                onClick={handleDrawerToggle}
-                style={{
-                  width: "100%",
-                  display: "block",
-                  textDecoration: "none",
-                  color: "#fff",
-                  cursor: "pointer",
-                }}
-                activeClass="active"
-              >
-                <ListItemText primary={item.label} />
-              </Link>
+            <ListItemButton
+              onClick={() => scrollToSection(item.id)}
+              sx={{
+                textAlign: "center",
+                color: "#fff",
+                "&:hover": { color: "#00ffff" },
+                transition: "0.3s",
+              }}
+            >
+              <ListItemText primary={item.label} />
             </ListItemButton>
           </ListItem>
         ))}
@@ -102,26 +102,17 @@ export default function Navbar() {
           {/* Desktop Menu */}
           <Box sx={{ display: { xs: "none", sm: "flex" }, gap: 2 }}>
             {navItems.map((item) => (
-              <Link
+              <Button
                 key={item.id}
-                to={item.id}
-                offset={-70}
-                style={{
-                  textDecoration: "none",
-                  color: "inherit",
-                  cursor: "pointer",
+                color="inherit"
+                onClick={() => scrollToSection(item.id)}
+                sx={{
+                  "&:hover": { color: "#00ffff" },
+                  transition: "0.3s",
                 }}
               >
-                <Button
-                  color="inherit"
-                  sx={{
-                    "&:hover": { color: "#00ffff" },
-                    transition: "0.3s",
-                  }}
-                >
-                  {item.label}
-                </Button>
-              </Link>
+                {item.label}
+              </Button>
             ))}
           </Box>
 
