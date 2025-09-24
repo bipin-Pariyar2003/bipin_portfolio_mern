@@ -7,6 +7,7 @@ import {
   CardContent,
   CardActionArea,
   Button,
+  CardMedia,
 } from "@mui/material";
 
 import projects from "../../utilities/projects";
@@ -55,6 +56,18 @@ export default function Projects() {
               }}
             >
               <CardActionArea href={project.link}>
+                {/* Project Image */}
+                <CardMedia
+                  component="img"
+                  height="150"
+                  image={project.image}
+                  alt={project.title}
+                  sx={{
+                    borderTopLeftRadius: "20px",
+                    borderTopRightRadius: "20px",
+                    objectFit: "cover",
+                  }}
+                />
                 <CardContent>
                   <Typography
                     variant="h5"
