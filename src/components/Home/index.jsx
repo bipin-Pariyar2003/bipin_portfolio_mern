@@ -1,29 +1,26 @@
 import React from "react";
-import { Box, Typography, Button, Container } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 
 export default function Home() {
   return (
     <Box
       sx={{
-        minHeight: "100vh",
+        minHeight: "calc(100vh - 64px)", // subtract approx navbar height
         display: "flex",
-        alignItems: "center",
         justifyContent: "center",
-        textAlign: "center",
-        px: 2,
+        flexDirection: { xs: "column-reverse", md: "row" },
+        alignItems: "center",
+        px: { xs: 2, md: 9 }, // padding left/right
+        pt: { xs: 10, md: 12 }, // padding top for navbar space
+        gap: { xs: 4, md: 0 }, // tighter gap on mobile
       }}
     >
-      {/* Glassy Home card */}
+      {/* Left: Text */}
       <Box
         sx={{
-          p: { xs: 4, md: 8 },
-          borderRadius: "25px",
-          background: "rgba(255,255,255,0.05)",
-          backdropFilter: "blur(20px)",
-          WebkitBackdropFilter: "blur(20px)",
-          border: "1px solid rgba(255,255,255,0.15)",
-          boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
-          maxWidth: "800px",
+          flex: 1,
+
+          textAlign: { xs: "center", md: "left" },
         }}
       >
         <Typography
@@ -35,6 +32,7 @@ export default function Home() {
             letterSpacing: 1,
             lineHeight: 1.2,
             textShadow: "0 0 8px #ffffff, 0 0 16px #00ffff",
+            fontSize: { xs: "1.8rem", md: "3rem" },
           }}
         >
           Hi, I&apos;m Bipin Pariyar
@@ -47,6 +45,7 @@ export default function Home() {
             color: "#b0b0b0",
             mb: 4,
             textShadow: "0 0 4px #ffffff",
+            fontSize: { xs: "1rem", md: "1.25rem" },
           }}
         >
           I build modern web applications and immersive user experiences.
@@ -58,10 +57,10 @@ export default function Home() {
             background:
               "linear-gradient(90deg, rgba(0,255,255,1) 0%, rgba(255,0,255,1) 100%)",
             color: "#fff",
-            px: 4,
-            py: 1.5,
+            px: { xs: 3, md: 4 },
+            py: { xs: 1, md: 1.5 },
             fontWeight: 600,
-            fontSize: "1rem",
+            fontSize: { xs: "0.9rem", md: "1rem" },
             borderRadius: "12px",
             boxShadow: "0 0 12px #00ffff, 0 0 24px #ff00ff",
             "&:hover": {
@@ -74,6 +73,22 @@ export default function Home() {
           Explore My Work
         </Button>
       </Box>
+
+      {/* Right: 3D Image */}
+      <Box
+        component="img"
+        src="/cartoon-profile.png"
+        alt="Bipin Pariyar"
+        sx={{
+          mt: { xs: 8, md: 0 },
+          width: { xs: "180px", sm: "220px", md: "350px" },
+          transform: "perspective(1000px) rotateY(10deg) rotateX(5deg)",
+          transition: "transform 0.6s ease, box-shadow 0.6s ease",
+          "&:hover": {
+            transform: "perspective(1000px) rotateY(0deg) rotateX(0deg) scale(1.05)",
+          },
+        }}
+      />
     </Box>
   );
 }
