@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Typography, Button } from "@mui/material";
-
+import DownloadIcon from "@mui/icons-material/Download";
 export default function Home() {
   return (
     <Box
@@ -71,6 +71,30 @@ export default function Home() {
           }}
         >
           Explore My Work
+        </Button>
+        <br />
+        <Button
+          variant="contained"
+          sx={{
+            mt: 2,
+            background:
+              "linear-gradient(90deg, rgba(0,255,255,1) 0%, rgba(255,0,255,1) 100%)",
+            color: "#fff",
+            px: { xs: 3, md: 4 },
+            py: { xs: 1, md: 1.5 },
+            fontWeight: 600,
+            fontSize: { xs: "0.9rem", md: "1rem" },
+            borderRadius: "12px",
+            boxShadow: "0 0 12px #00ffff, 0 0 24px #ff00ff",
+            "&:hover": {
+              boxShadow: "0 0 24px #00ffff, 0 0 48px #ff00ff",
+              transform: "scale(1.05)",
+            },
+            transition: "0.3s ease",
+          }}
+        >
+          <DownloadIcon sx={{ mr: 1 }} />
+          Download Resume
         </Button>
       </Box>
 

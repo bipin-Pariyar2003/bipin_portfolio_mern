@@ -9,30 +9,7 @@ import {
   Button,
 } from "@mui/material";
 
-// Example project data
-const projects = [
-  {
-    title: "Portfolio Website",
-    description: "A modern portfolio built with React, MUI, and glassy UI effects.",
-    link: "#",
-  },
-  {
-    title: "Image Editor App",
-    description: "A Canva-like app using React, Redux, and Konva for image editing.",
-    link: "#",
-  },
-  {
-    title: "Attendance Management",
-    description: "A MERN stack app to manage staff attendance with reporting features.",
-    link: "#",
-  },
-  {
-    title: "UI/UX Design Project",
-    description:
-      "Designed and developed interactive frontend layouts with Figma and HTML/CSS.",
-    link: "#",
-  },
-];
+import projects from "../../utilities/projects";
 
 export default function Projects() {
   return (
