@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import { Box, Typography, TextField, Button } from "@mui/material";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -14,7 +18,19 @@ export default function Contact() {
     alert("Message sent!");
     setForm({ name: "", email: "", message: "" });
   };
+  const handleFacebook = () => {
+    window.open("https://www.facebook.com/bipin.pariyar.568/", "_blank");
+  };
 
+  const handleGitHub = () => {
+    window.open("https://github.com/bipin-Pariyar2003", "_blank");
+  };
+  const handleInstagram = () => {
+    window.open("https://www.instagram.com/pariyar_bipin/?__pwa=1", "_blank");
+  };
+  const handleLinkedIn = () => {
+    window.open("https://www.linkedin.com/in/bipin-pariyar-767782208/", "_blank");
+  };
   return (
     <Box
       sx={{
@@ -154,6 +170,44 @@ export default function Contact() {
         >
           Send Message
         </Button>
+      </Box>
+      <Box sx={{ mt: 6, display: "flex", gap: 3 }}>
+        <FacebookIcon
+          onClick={handleFacebook}
+          sx={{
+            fontSize: "2.5rem",
+            cursor: "pointer",
+            transition: "0.3s ease",
+            "&:hover": { transform: "scale(1.2)", color: "#3b5998" },
+          }}
+        />
+        <GitHubIcon
+          onClick={handleGitHub}
+          sx={{
+            fontSize: "2.5rem",
+            cursor: "pointer",
+            transition: "0.3s ease",
+            "&:hover": { transform: "scale(1.2)", color: "#333333" },
+          }}
+        />
+        <InstagramIcon
+          onClick={handleInstagram}
+          sx={{
+            fontSize: "2.5rem",
+            cursor: "pointer",
+            transition: "0.3s ease",
+            "&:hover": { transform: "scale(1.2)", color: "#c13584" },
+          }}
+        />
+        <LinkedInIcon
+          onClick={handleLinkedIn}
+          sx={{
+            fontSize: "2.5rem",
+            cursor: "pointer",
+            transition: "0.3s ease",
+            "&:hover": { transform: "scale(1.2)", color: "#0077b5" },
+          }}
+        />
       </Box>
     </Box>
   );
