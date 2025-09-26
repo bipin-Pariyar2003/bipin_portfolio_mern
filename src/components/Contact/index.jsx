@@ -4,6 +4,8 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import Headings from "../../utilities/Headings";
+import GradientButton from "../../utilities/GradientButton";
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -43,22 +45,13 @@ export default function Contact() {
         alignItems: "center",
       }}
     >
-      <Typography
-        variant="h3"
-        sx={{
-          color: "#fff",
-          mb: 6,
-          textShadow: "0 0 8px #fff, 0 0 16px #00ffff",
-          fontWeight: 700,
-        }}
-      >
-        Contact Me
-      </Typography>
+      <Headings>Contact Me</Headings>
 
       <Box
         component="form"
         onSubmit={handleSubmit}
         sx={{
+          mt: 2,
           width: "100%",
           maxWidth: "600px",
           display: "flex",
@@ -151,25 +144,7 @@ export default function Contact() {
           }}
         />
 
-        <Button
-          type="submit"
-          variant="contained"
-          sx={{
-            background: "linear-gradient(90deg, #00ffff, #ff00ff)",
-            color: "#fff",
-            py: 1.5,
-            fontWeight: 600,
-            borderRadius: "12px",
-            boxShadow: "0 0 12px #00ffff, 0 0 24px #ff00ff",
-            "&:hover": {
-              boxShadow: "0 0 24px #00ffff, 0 0 48px #ff00ff",
-              transform: "scale(1.05)",
-            },
-            transition: "0.3s ease",
-          }}
-        >
-          Send Message
-        </Button>
+        <GradientButton>Send Message</GradientButton>
       </Box>
       <Box sx={{ mt: 6, display: "flex", gap: 3 }}>
         <FacebookIcon

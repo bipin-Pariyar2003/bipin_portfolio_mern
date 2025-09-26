@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, Typography, Grid, Avatar } from "@mui/material";
+import Headings from "../../utilities/Headings";
 
 export default function About() {
   return (
@@ -14,17 +15,7 @@ export default function About() {
         alignItems: "center",
       }}
     >
-      <Typography
-        variant="h3"
-        sx={{
-          color: "#fff",
-          mb: 6,
-          textShadow: "0 0 8px #fff, 0 0 16px #00ffff",
-          fontWeight: 700,
-        }}
-      >
-        About Me
-      </Typography>
+      <Headings>About Me</Headings>
 
       <Grid
         container
@@ -67,7 +58,6 @@ export default function About() {
                 color: "#ffffff",
                 mb: 2,
                 fontWeight: 600,
-                textShadow: "0 0 6px #fff, 0 0 12px #00ffff",
               }}
             >
               Hello, I&apos;m Bipin Pariyar

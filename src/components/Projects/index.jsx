@@ -11,6 +11,8 @@ import {
 } from "@mui/material";
 
 import projects from "../../utilities/projects";
+import Headings from "../../utilities/Headings";
+import GradientButton from "../../utilities/GradientButton";
 
 export default function Projects() {
   return (
@@ -25,19 +27,9 @@ export default function Projects() {
         alignItems: "center",
       }}
     >
-      <Typography
-        variant="h3"
-        sx={{
-          color: "#fff",
-          mb: 6,
-          textShadow: "0 0 8px #fff, 0 0 16px #00ffff",
-          fontWeight: 700,
-        }}
-      >
-        My Projects
-      </Typography>
+      <Headings>My Projects</Headings>
 
-      <Grid container spacing={4}>
+      <Grid container spacing={4} sx={{ mt: 2 }}>
         {projects.map((project, idx) => (
           <Grid item xs={12} sm={6} md={4} key={idx}>
             <Card
@@ -91,23 +83,8 @@ export default function Projects() {
                   </Typography>
                 </CardContent>
               </CardActionArea>
-              <Box sx={{ textAlign: "center", pb: 2 }}>
-                <Button
-                  href={project.link}
-                  variant="contained"
-                  sx={{
-                    mt: 1,
-                    background: "linear-gradient(90deg, #00ffff, #ff00ff)",
-                    color: "#fff",
-                    "&:hover": {
-                      boxShadow: "0 0 20px #00ffff, 0 0 40px #ff00ff",
-                      transform: "scale(1.05)",
-                    },
-                    transition: "0.3s ease",
-                  }}
-                >
-                  View Project
-                </Button>
+              <Box sx={{ textAlign: "center", pb: 2, mt: 1 }}>
+                <GradientButton>View Project</GradientButton>
               </Box>
             </Card>
           </Grid>

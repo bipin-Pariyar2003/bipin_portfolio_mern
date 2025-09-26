@@ -8,7 +8,7 @@ export default function SoftHeading({ children, ...props }) {
       sx={{
         fontWeight: 700,
         color: "#e0e0e0", // soft off-white
-        mb: 2,
+        mb: 4,
         letterSpacing: 1,
         lineHeight: 1.2,
         textShadow: `
