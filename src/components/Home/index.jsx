@@ -1,11 +1,18 @@
-import React from "react";
-import { Box, Typography, Button, Avatar } from "@mui/material";
+import React, { useState } from "react";
+import { Box, Typography, Button, Avatar, Tooltip } from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
 import Headings from "../../utilities/Headings";
 import TypewriterHeading from "../../utilities/TypeWriterHeading";
 import GradientButton from "../../utilities/GradientButton";
 
 export default function Home() {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText("bipin.pariyar2002@gmail.com");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000); // reset after 2 seconds
+  };
   return (
     <Box
       sx={{
@@ -58,8 +65,20 @@ export default function Home() {
           >
             Explore My Work
           </GradientButton>
-
           <GradientButton startIcon={<DownloadIcon />}>Download Resume</GradientButton>
+          <Tooltip title={copied ? "Copied!" : "Click to copy email"} arrow>
+            <Typography
+              sx={{
+                color: "#b0b0b0",
+                cursor: "pointer",
+                "&:hover": { color: "#fff" },
+                transition: "color 0.3s ease",
+              }}
+              onClick={handleCopy}
+            >
+              bipin.pariyar2002@gmail.com
+            </Typography>
+          </Tooltip>{" "}
         </Box>
       </Box>
 
