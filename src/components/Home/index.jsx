@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Typography, Button, Avatar } from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
 import Headings from "../../utilities/Headings";
+import TypewriterHeading from "../../utilities/TypeWriterHeading";
 import GradientButton from "../../utilities/GradientButton";
 
 export default function Home() {
@@ -25,7 +26,7 @@ export default function Home() {
           textAlign: { xs: "center", md: "left" },
         }}
       >
-        <Headings> Hi, I&apos;m Bipin Pariyar</Headings>
+        <TypewriterHeading> Hi, I&apos;m Bipin Pariyar</TypewriterHeading>
 
         <Typography
           variant="h5"
@@ -124,7 +125,7 @@ export default function Home() {
             },
           }}
         >
-          👋 Hi there!
+          👋 Exploring my work? You’re in the right place!
         </Box>
       </Box>
     </Box>

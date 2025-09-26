@@ -67,11 +67,22 @@ export default function Projects() {
                       color: "#fff",
                       fontWeight: 600,
                       mb: 1,
-                      textShadow: "0 0 6px #fff, 0 0 12px #00ffff",
+                      textShadow: `
+      0 0 3px rgba(255,255,255,0.5),  /* soft white glow */
+      0 0 6px rgba(0,0,0,0.5)          /* subtle black shadow */
+    `,
+                      transition: "text-shadow 0.3s ease",
+                      "&:hover": {
+                        textShadow: `
+        0 0 5px rgba(255,255,255,0.6),
+        0 0 10px rgba(0,0,0,0.6)
+      ` /* slightly stronger glow on hover */,
+                      },
                     }}
                   >
                     {project.title}
                   </Typography>
+
                   <Typography variant="body2" sx={{ color: "#b0b0b0", lineHeight: 1.6 }}>
                     {project.description}
                   </Typography>
