@@ -83,6 +83,12 @@ export default function Projects() {
                   <Typography variant="body2" sx={{ color: "#b0b0b0", lineHeight: 1.6 }}>
                     {project.description}
                   </Typography>
+                  <Typography variant="body2" sx={{ mt: 2, color: "#b0b0b0" }}>
+                    <strong style={{ color: "#fff" }}>Tools:</strong>{" "}
+                    <span style={{ color: "#b0b0b0", fontStyle: "italic" }}>
+                      {project.tools.join(", ")}
+                    </span>
+                  </Typography>
                 </CardContent>
               </CardActionArea>
               <Box sx={{ textAlign: "center", pb: 2 }}>
