@@ -1,42 +1,31 @@
 import React from "react";
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography, Button, Avatar } from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
+import Headings from "../../utilities/Headings";
+import GradientButton from "../../utilities/GradientButton";
+
 export default function Home() {
   return (
     <Box
       sx={{
-        minHeight: "calc(100vh - 64px)", // subtract approx navbar height
+        minHeight: "calc(100vh)",
         display: "flex",
         justifyContent: "center",
         flexDirection: { xs: "column-reverse", md: "row" },
         alignItems: "center",
-        px: { xs: 2, md: 9 }, // padding left/right
-        pt: { xs: 10, md: 12 }, // padding top for navbar space
-        gap: { xs: 4, md: 0 }, // tighter gap on mobile
+        px: { xs: 2, md: 9 },
+        pt: { xs: 16, md: 12 },
+        gap: { xs: 4, md: 0 },
       }}
     >
       {/* Left: Text */}
       <Box
         sx={{
           flex: 1,
-
           textAlign: { xs: "center", md: "left" },
         }}
       >
-        <Typography
-          variant="h2"
-          sx={{
-            fontWeight: 700,
-            color: "#ffffff",
-            mb: 2,
-            letterSpacing: 1,
-            lineHeight: 1.2,
-            textShadow: "0 0 8px #ffffff, 0 0 16px #00ffff",
-            fontSize: { xs: "1.8rem", md: "3rem" },
-          }}
-        >
-          Hi, I&apos;m Bipin Pariyar
-        </Typography>
+        <Headings> Hi, I&apos;m Bipin Pariyar</Headings>
 
         <Typography
           variant="h5"
@@ -51,68 +40,93 @@ export default function Home() {
           I build modern web applications and immersive user experiences.
         </Typography>
 
-        <Button
-          variant="contained"
+        <Box
           sx={{
-            background:
-              "linear-gradient(90deg, rgba(0,255,255,1) 0%, rgba(255,0,255,1) 100%)",
-            color: "#fff",
-            px: { xs: 3, md: 4 },
-            py: { xs: 1, md: 1.5 },
-            fontWeight: 600,
-            fontSize: { xs: "0.9rem", md: "1rem" },
-            borderRadius: "12px",
-            boxShadow: "0 0 12px #00ffff, 0 0 24px #ff00ff",
-            "&:hover": {
-              boxShadow: "0 0 24px #00ffff, 0 0 48px #ff00ff",
-              transform: "scale(1.05)",
-            },
-            transition: "0.3s ease",
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+
+            alignItems: { xs: "center", md: "flex-start" },
           }}
         >
-          Explore My Work
-        </Button>
-        <br />
-        <Button
-          variant="contained"
-          sx={{
-            mt: 2,
-            background:
-              "linear-gradient(90deg, rgba(0,255,255,1) 0%, rgba(255,0,255,1) 100%)",
-            color: "#fff",
-            px: { xs: 3, md: 4 },
-            py: { xs: 1, md: 1.5 },
-            fontWeight: 600,
-            fontSize: { xs: "0.9rem", md: "1rem" },
-            borderRadius: "12px",
-            boxShadow: "0 0 12px #00ffff, 0 0 24px #ff00ff",
-            "&:hover": {
-              boxShadow: "0 0 24px #00ffff, 0 0 48px #ff00ff",
-              transform: "scale(1.05)",
-            },
-            transition: "0.3s ease",
-          }}
-        >
-          <DownloadIcon sx={{ mr: 1 }} />
-          Download Resume
-        </Button>
+          <GradientButton
+            onClick={() => {
+              const projectsSection = document.getElementById("projects");
+              projectsSection?.scrollIntoView({ behavior: "smooth" });
+            }}
+          >
+            Explore My Work
+          </GradientButton>
+
+          <GradientButton startIcon={<DownloadIcon />}>Download Resume</GradientButton>
+        </Box>
       </Box>
 
-      {/* Right: 3D Image */}
+      {/* Right: Avatar with 3D effect & chat bubble */}
       <Box
-        component="img"
-        src="/cartoon-profile.png"
-        alt="Bipin Pariyar"
         sx={{
-          mt: { xs: 8, md: 0 },
-          width: { xs: "180px", sm: "220px", md: "350px" },
-          transform: "perspective(1000px) rotateY(10deg) rotateX(5deg)",
-          transition: "transform 0.6s ease, box-shadow 0.6s ease",
-          "&:hover": {
-            transform: "perspective(1000px) rotateY(0deg) rotateX(0deg) scale(1.05)",
-          },
+          flex: { xs: "unset", md: 1 },
+          display: "flex",
+          justifyContent: { xs: "center", md: "center" },
+          mt: { xs: 6, md: 0 },
+          position: "relative",
         }}
-      />
+      >
+        {/* Avatar */}
+        <Avatar
+          alt="Bipin Pariyar"
+          src="/cartoon-profile.png"
+          sx={{
+            width: { xs: 180, sm: 220, md: 300 },
+            height: { xs: 180, sm: 220, md: 300 },
+            border: "4px solid #00ffff",
+            transform: "perspective(1000px) rotateY(10deg) rotateX(5deg)",
+            transition: "transform 0.6s ease, box-shadow 0.6s ease",
+            boxShadow: "0 8px 20px rgba(0, 255, 255, 0.5)",
+            animation: "float 3s ease-in-out infinite",
+            "&:hover": {
+              transform: "perspective(1000px) rotateY(0deg) rotateX(0deg) scale(1.05)",
+              boxShadow: "0 12px 40px rgba(255, 0, 255, 0.7)",
+            },
+            "&:hover + .chat-bubble": {
+              opacity: 1,
+              transform: "translateY(0)",
+            },
+          }}
+        />
+
+        {/* Chat Bubble */}
+        <Box
+          className="chat-bubble"
+          sx={{
+            position: "absolute",
+            top: -60,
+            background: "rgba(0, 0, 0, 0.8)",
+            color: "#fff",
+            px: 2,
+            py: 1,
+            borderRadius: "12px",
+            fontSize: "0.9rem",
+            whiteSpace: "nowrap",
+            boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
+            opacity: 0,
+            transform: "translateY(10px)",
+            transition: "opacity 0.6s ease, transform 0.6s ease",
+            "&::after": {
+              content: '""',
+              position: "absolute",
+              bottom: -8,
+              left: "50%",
+              transform: "translateX(-50%)",
+              borderWidth: "8px",
+              borderStyle: "solid",
+              borderColor: "rgba(0,0,0,0.8) transparent transparent transparent",
+            },
+          }}
+        >
+          👋 Hi there!
+        </Box>
+      </Box>
     </Box>
   );
 }
