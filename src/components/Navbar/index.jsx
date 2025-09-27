@@ -29,7 +29,7 @@ export default function Navbar() {
 
   const scrollToSection = (id) => {
     scroller.scrollTo(id, {
-      smooth: true,
+      // smooth: true,
       offset: -70,
       duration: 500,
     });

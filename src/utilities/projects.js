@@ -4,7 +4,7 @@ const projects = [
     title: "Portfolio Website Fullstack",
     description: "A fullstack portfolio built with Python Django with admin panel.",
     tools: ["Django", "HTML", "CSS", "JavaScript", "Bootstrap", "SQLite", "Python"],
-    image: "/bipin-profile.png",
+    image: "/projects/fullstack-portfolio.png",
     link: "#",
   },
   {
@@ -20,7 +20,7 @@ const projects = [
       "Konva",
       "Node.js",
     ],
-    image: "/bipin-profile.png",
+    image: "/projects/image-editor.png",
 
     link: "#",
   },
@@ -28,7 +28,7 @@ const projects = [
     title: "Attendance Management",
     description: "A MERN stack app to manage staff attendance with reporting features.",
     tools: ["Node.js", "HTML", "CSS", "JavaScript", "Material-UI", "React"],
-    image: "/bipin-profile.png",
+    image: "/projects/attendance.png",
 
     link: "#",
   },
@@ -37,7 +37,7 @@ const projects = [
     description:
       "An Ecommerce Platform for buying and selling Glass Paintings, Fullstack using JAVA, Tomcat, MySQL.",
     tools: ["Java", "HTML", "CSS", "JavaScript", "Bootstrap", "MySQL", "Tomcat"],
-    image: "/bipin-profile.png",
+    image: "/projects/glass-painting.png",
 
     link: "#",
   },
@@ -46,7 +46,7 @@ const projects = [
     description:
       "A full-stack e-commerce site with product listings, cart, and payment integration. Built Using Python Django",
     tools: ["Django", "HTML", "CSS", "JavaScript", "Bootstrap", "SQLite", "Python"],
-    image: "/bipin-cartoon.png",
+    image: "/projects/ecommerce-python.webp",
 
     link: "#",
   },
@@ -64,7 +64,7 @@ const projects = [
       "Express",
       "MongoDB",
     ],
-    image: "/bipin-profile.png",
+    image: "/projects/bees-accessories.png",
 
     link: "#",
   },
@@ -72,7 +72,7 @@ const projects = [
     title: "Task Management Tool",
     description:
       "A productivity app to create, track, and manage tasks with deadlines and priorities.",
-    image: "/bipin-profile.png",
+    image: "/projects/task-management.png",
     tools: ["React", "HTML", "CSS", "JavaScript", "Material-UI", "Node.js"],
 
     link: "#",
@@ -81,7 +81,7 @@ const projects = [
     title: "Nepali Date Picker and Converter",
     description:
       "A React component for selecting and converting dates between Nepali and Gregorian calendars.",
-    image: "/bipin-profile.png",
+    image: "/projects/nepali-date-picker.png",
     tools: ["React", "HTML", "CSS", "JavaScript", "Material-UI", "Node.js"],
 
     link: "#",
