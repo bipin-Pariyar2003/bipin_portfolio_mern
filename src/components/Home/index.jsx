@@ -65,7 +65,13 @@ export default function Home() {
           >
             Explore My Work
           </GradientButton>
-          <GradientButton startIcon={<DownloadIcon />}>Download Resume</GradientButton>
+          <a
+            href="/Bipin_CV.pdf"
+            download="Bipin_Resume.pdf"
+            style={{ textDecoration: "none" }}
+          >
+            <GradientButton startIcon={<DownloadIcon />}>Download Resume</GradientButton>
+          </a>
           <Tooltip title={copied ? "Copied!" : "Click to copy email"} arrow>
             <Typography
               sx={{

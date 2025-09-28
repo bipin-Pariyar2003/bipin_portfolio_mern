@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Typography, TextField, Button } from "@mui/material";
+import { Box, Typography, TextField } from "@mui/material";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import InstagramIcon from "@mui/icons-material/Instagram";
@@ -10,36 +10,32 @@ import GradientButton from "../../utilities/GradientButton";
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const playClick = () => {
+    const audio = new Audio("/click.mp3"); // same as Navbar
+    audio.play();
   };
+
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Add your submit logic here (e.g., send to email or API)
+    playClick(); // play sound on form submission
     alert("Message sent!");
     setForm({ name: "", email: "", message: "" });
   };
-  const handleFacebook = () => {
-    window.open("https://www.facebook.com/bipin.pariyar.568/", "_blank");
+
+  const handleIconClick = (url) => {
+    playClick(); // play sound
+    window.open(url, "_blank");
   };
 
-  const handleGitHub = () => {
-    window.open("https://github.com/bipin-Pariyar2003", "_blank");
-  };
-  const handleInstagram = () => {
-    window.open("https://www.instagram.com/pariyar_bipin/?__pwa=1", "_blank");
-  };
-  const handleLinkedIn = () => {
-    window.open("https://www.linkedin.com/in/bipin-pariyar-767782208/", "_blank");
-  };
   return (
     <Box
       sx={{
         minHeight: "100vh",
         py: 10,
         px: 4,
-        background: "linear-gradient(135deg, #000000, #434343)", // dark gradient
+        background: "linear-gradient(135deg, #000000, #434343)",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -81,16 +77,13 @@ export default function Contact() {
               "& .MuiOutlinedInput-notchedOutline": {
                 borderColor: "rgba(255,255,255,0.3)",
               },
-              "&:hover .MuiOutlinedInput-notchedOutline": {
-                borderColor: "#00ffff",
-              },
+              "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#00ffff" },
               "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
                 borderColor: "#00ffff",
               },
             },
           }}
         />
-
         <TextField
           label="Email"
           name="email"
@@ -107,16 +100,13 @@ export default function Contact() {
               "& .MuiOutlinedInput-notchedOutline": {
                 borderColor: "rgba(255,255,255,0.3)",
               },
-              "&:hover .MuiOutlinedInput-notchedOutline": {
-                borderColor: "#00ffff",
-              },
+              "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#00ffff" },
               "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
                 borderColor: "#00ffff",
               },
             },
           }}
         />
-
         <TextField
           label="Message"
           name="message"
@@ -134,21 +124,19 @@ export default function Contact() {
               "& .MuiOutlinedInput-notchedOutline": {
                 borderColor: "rgba(255,255,255,0.3)",
               },
-              "&:hover .MuiOutlinedInput-notchedOutline": {
-                borderColor: "#00ffff",
-              },
+              "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#00ffff" },
               "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
                 borderColor: "#00ffff",
               },
             },
           }}
         />
-
         <GradientButton>Send Message</GradientButton>
       </Box>
+
       <Box sx={{ mt: 6, display: "flex", gap: 3 }}>
         <FacebookIcon
-          onClick={handleFacebook}
+          onClick={() => handleIconClick("https://www.facebook.com/bipin.pariyar.568/")}
           sx={{
             fontSize: "2.5rem",
             cursor: "pointer",
@@ -157,16 +145,18 @@ export default function Contact() {
           }}
         />
         <GitHubIcon
-          onClick={handleGitHub}
+          onClick={() => handleIconClick("https://github.com/bipin-Pariyar2003")}
           sx={{
             fontSize: "2.5rem",
             cursor: "pointer",
             transition: "0.3s ease",
-            "&:hover": { transform: "scale(1.2)", color: "#333333" },
+            "&:hover": { transform: "scale(1.2)", color: "#333" },
           }}
         />
         <InstagramIcon
-          onClick={handleInstagram}
+          onClick={() =>
+            handleIconClick("https://www.instagram.com/pariyar_bipin/?__pwa=1")
+          }
           sx={{
             fontSize: "2.5rem",
             cursor: "pointer",
@@ -175,7 +165,9 @@ export default function Contact() {
           }}
         />
         <LinkedInIcon
-          onClick={handleLinkedIn}
+          onClick={() =>
+            handleIconClick("https://www.linkedin.com/in/bipin-pariyar-767782208/")
+          }
           sx={{
             fontSize: "2.5rem",
             cursor: "pointer",

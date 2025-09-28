@@ -13,7 +13,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Link, scroller } from "react-scroll";
+import { scroller } from "react-scroll";
 
 const navItems = [
   { label: "Home", id: "home" },
@@ -27,9 +27,15 @@ export default function Navbar() {
 
   const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
 
+  // 🔊 Play click sound
+  const playClick = () => {
+    const audio = new Audio("/click.mp3"); // make sure file is in public/sounds
+    audio.play();
+  };
+
   const scrollToSection = (id) => {
+    playClick(); // play sound first
     scroller.scrollTo(id, {
-      // smooth: true,
       offset: -70,
       duration: 500,
     });
