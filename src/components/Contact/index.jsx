@@ -1,17 +1,18 @@
 import React, { useState } from "react";
-import { Box, Typography, TextField } from "@mui/material";
+import { Box, TextField } from "@mui/material";
+import emailjs from "emailjs-com";
+import Headings from "../../utilities/Headings";
+import GradientButton from "../../utilities/GradientButton";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import Headings from "../../utilities/Headings";
-import GradientButton from "../../utilities/GradientButton";
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
 
   const playClick = () => {
-    const audio = new Audio("/click.mp3"); // same as Navbar
+    const audio = new Audio("/click.mp3");
     audio.play();
   };
 
@@ -19,13 +20,29 @@ export default function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    playClick(); // play sound on form submission
-    alert("Message sent!");
-    setForm({ name: "", email: "", message: "" });
+    playClick();
+
+    emailjs
+      .send(
+        "bipin_gmail_1976", // e.g. service_123abc
+        "template_u2bao7h", // e.g. template_xyz
+        form,
+        "7wcq-gWY8bY03Dgpx" // e.g. gW2KfjO0vABC123
+      )
+      .then(
+        () => {
+          alert("✅ Message sent successfully!");
+          setForm({ name: "", email: "", message: "" });
+        },
+        (error) => {
+          console.error(error);
+          alert("❌ Failed to send message. Please try again later.");
+        }
+      );
   };
 
   const handleIconClick = (url) => {
-    playClick(); // play sound
+    playClick();
     window.open(url, "_blank");
   };
 
@@ -57,7 +74,6 @@ export default function Contact() {
           borderRadius: "20px",
           background: "rgba(255,255,255,0.05)",
           backdropFilter: "blur(15px)",
-          WebkitBackdropFilter: "blur(15px)",
           border: "1px solid rgba(255,255,255,0.1)",
           boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
         }}
@@ -84,6 +100,7 @@ export default function Contact() {
             },
           }}
         />
+
         <TextField
           label="Email"
           name="email"
@@ -107,6 +124,7 @@ export default function Contact() {
             },
           }}
         />
+
         <TextField
           label="Message"
           name="message"
@@ -131,7 +149,8 @@ export default function Contact() {
             },
           }}
         />
-        <GradientButton>Send Message</GradientButton>
+
+        <GradientButton type="submit">Send Message</GradientButton>
       </Box>
 
       <Box sx={{ mt: 6, display: "flex", gap: 3 }}>
