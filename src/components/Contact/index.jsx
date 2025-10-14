@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, TextField } from "@mui/material";
+import { Box, TextField, Snackbar, Alert } from "@mui/material";
 import emailjs from "emailjs-com";
 import Headings from "../../utilities/Headings";
 import GradientButton from "../../utilities/GradientButton";
@@ -10,6 +10,11 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "info",
+  });
 
   const playClick = () => {
     const audio = new Audio("/click.mp3");
@@ -18,25 +23,47 @@ export default function Contact() {
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
+  const handleCloseSnackbar = () => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
+  };
+
+  const showSnackbar = (message, severity) => {
+    setSnackbar({ open: true, message, severity });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     playClick();
 
+    // Basic validation
+    if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
+      showSnackbar("⚠️ Please fill out all fields before sending.", "warning");
+      return;
+    }
+
+    // Email format check
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(form.email)) {
+      showSnackbar("⚠️ Please enter a valid email address.", "warning");
+      return;
+    }
+
+    // Send email using EmailJS
     emailjs
       .send(
         "bipin_gmail_1976", // e.g. service_123abc
         "template_u2bao7h", // e.g. template_xyz
         form,
-        "7wcq-gWY8bY03Dgpx" // e.g. gW2KfjO0vABC123
+        "7wcq-gWY8bY03Dgpx" // e.g. gW2KfjO0vABC123)
       )
       .then(
         () => {
-          alert("✅ Message sent successfully!");
+          showSnackbar("✅ Message sent successfully!", "success");
           setForm({ name: "", email: "", message: "" });
         },
         (error) => {
           console.error(error);
-          alert("❌ Failed to send message. Please try again later.");
+          showSnackbar("❌ Failed to send message. Please try again later.", "error");
         }
       );
   };
@@ -79,6 +106,7 @@ export default function Contact() {
         }}
       >
         <TextField
+          required
           label="Name"
           name="name"
           value={form.name}
@@ -102,6 +130,7 @@ export default function Contact() {
         />
 
         <TextField
+          required
           label="Email"
           name="email"
           type="email"
@@ -126,6 +155,7 @@ export default function Contact() {
         />
 
         <TextField
+          required
           label="Message"
           name="message"
           multiline
@@ -195,6 +225,27 @@ export default function Contact() {
           }}
         />
       </Box>
+
+      {/* ✅ Snackbar Notification */}
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={4000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbar.severity}
+          sx={{
+            width: "100%",
+            borderRadius: "10px",
+            fontWeight: "500",
+            fontSize: "1rem",
+          }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }
