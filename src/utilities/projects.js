@@ -1,6 +1,22 @@
 // Example project data
 const projects = [
   {
+    title: "Chat Bot ",
+    description:
+      "A chatbot using MERN stack, that can generated text and images based on user prompts.",
+    tools: [
+      "Node.js",
+      "Material-UI",
+      "Tailwind",
+      "OpenAI",
+      "Huggingface",
+      "React",
+      "MongoDB",
+    ],
+    image: "/projects/chatbot.png",
+    link: "https://chatmandu.vercel.app/",
+  },
+  {
     title: "Portfolio Website Fullstack",
     description: "A fullstack portfolio built with Python Django with admin panel.",
     tools: ["Django", "HTML", "CSS", "JavaScript", "Bootstrap", "SQLite", "Python"],

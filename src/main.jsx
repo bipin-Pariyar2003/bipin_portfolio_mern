@@ -7,18 +7,16 @@ import { ThemeProvider, CssBaseline, Box } from "@mui/material";
 import Cursor from "./utilities/Cursor/index.jsx";
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Cursor />
-      <Box
-        sx={{
-          minHeight: "100vh",
-          background: "linear-gradient(135deg, #000000, #434343)", // gradient here
-        }}
-      >
-        <App />
-      </Box>
-    </ThemeProvider>
-  </StrictMode>
+  <ThemeProvider theme={theme}>
+    <CssBaseline />
+    <Cursor />
+    <Box
+      sx={{
+        minHeight: "100vh",
+        background: "linear-gradient(135deg, #000000, #434343)", // gradient here
+      }}
+    >
+      <App />
+    </Box>
+  </ThemeProvider>
 );
