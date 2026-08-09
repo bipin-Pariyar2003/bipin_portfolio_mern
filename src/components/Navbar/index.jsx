@@ -1,9 +1,7 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   AppBar,
   Toolbar,
-  Typography,
-  Button,
   Box,
   IconButton,
   Drawer,
@@ -13,56 +11,84 @@ import {
   ListItemText,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { scroller } from "react-scroll";
+import CloseIcon from "@mui/icons-material/Close";
 
 const navItems = [
   { label: "Home", id: "home" },
   { label: "Projects", id: "projects" },
   { label: "About", id: "about" },
+  { label: "Skills", id: "skills" },
   { label: "Contact", id: "contact" },
 ];
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState("home");
 
-  const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
-
-  // 🔊 Play click sound
-  const playClick = () => {
-    const audio = new Audio("/click.mp3"); // make sure file is in public/sounds
-    audio.play();
-  };
+  useEffect(() => {
+    const onScroll = () => {
+      setScrolled(window.scrollY > 24);
+      let current = "home";
+      for (const item of navItems) {
+        const el = document.getElementById(item.id);
+        if (el && el.getBoundingClientRect().top <= window.innerHeight * 0.4) {
+          current = item.id;
+        }
+      }
+      setActive((prev) => (prev === current ? prev : current));
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const scrollToSection = (id) => {
-    playClick(); // play sound first
-    scroller.scrollTo(id, {
-      offset: -70,
-      duration: 500,
-    });
-    setMobileOpen(false); // close drawer on mobile click
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    setMobileOpen(false);
   };
 
   const drawer = (
     <Box
       sx={{
-        textAlign: "center",
-        background: "rgba(0,0,0,0.95)",
         height: "100%",
+        background: "var(--cream)",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        pt: 4,
       }}
     >
-      <Typography variant="h6" sx={{ my: 2, color: "#fff", fontWeight: 600 }}>
-        Bipin Pariyar
-      </Typography>
-      <List>
+      <Box
+        sx={{
+          fontFamily: '"Fraunces", serif',
+          fontWeight: 600,
+          fontSize: "1.5rem",
+          color: "var(--espresso)",
+          mb: 3,
+        }}
+      >
+        bipin<span style={{ color: "var(--terracotta)" }}>.</span>
+      </Box>
+      <List sx={{ width: "100%", px: 2 }}>
         {navItems.map((item) => (
           <ListItem key={item.id} disablePadding>
             <ListItemButton
               onClick={() => scrollToSection(item.id)}
               sx={{
                 textAlign: "center",
-                color: "#fff",
-                "&:hover": { color: "#00ffff" },
-                transition: "0.3s",
+                justifyContent: "center",
+                py: 1.2,
+                borderRadius: "10px",
+                color: "var(--espresso)",
+                fontFamily: "var(--font-sans)",
+                fontWeight: 600,
+                fontSize: "1rem",
+                "&:hover": {
+                  color: "var(--terracotta)",
+                  background: "var(--beige)",
+                },
               }}
             >
               <ListItemText primary={item.label} />
@@ -79,14 +105,13 @@ export default function Navbar() {
         position="fixed"
         elevation={0}
         sx={{
-          top: 0,
-          left: 0,
-          px: 3,
           width: "100%",
-          background: "rgba(255, 255, 255, 0.05)",
-          backdropFilter: "blur(10px)",
-          WebkitBackdropFilter: "blur(10px)",
-          borderBottom: "1px solid rgba(255, 255, 255, 0.2)",
+          background: scrolled ? "rgba(20, 16, 12, 0.85)" : "transparent",
+          backdropFilter: scrolled ? "blur(14px)" : "none",
+          WebkitBackdropFilter: scrolled ? "blur(14px)" : "none",
+          borderBottom: scrolled ? "1px solid var(--taupe)" : "none",
+          boxShadow: scrolled ? "0 8px 28px -18px rgba(0,0,0,0.6)" : "none",
+          transition: "background 0.4s ease, box-shadow 0.4s ease",
         }}
       >
         <Toolbar
@@ -94,59 +119,74 @@ export default function Navbar() {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            px: 4,
+            px: { xs: 2.5, md: 5 },
+            minHeight: { xs: 60, md: 68 },
           }}
         >
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ fontWeight: 600, letterSpacing: 1 }}
+          <Box
+            onClick={() => scrollToSection("home")}
+            sx={{
+              fontFamily: '"Fraunces", serif',
+              fontWeight: 600,
+              fontSize: { xs: "1.25rem", md: "1.4rem" },
+              color: "var(--espresso)",
+              cursor: "pointer",
+              userSelect: "none",
+              letterSpacing: "-0.01em",
+            }}
           >
-            Bipin Pariyar
-          </Typography>
+            bipin<span style={{ color: "var(--terracotta)" }}>.</span>
+          </Box>
 
-          {/* Desktop Menu */}
-          <Box sx={{ display: { xs: "none", sm: "flex" }, gap: 2 }}>
+          <Box sx={{ display: { xs: "none", md: "flex" }, gap: { md: 2.5 } }}>
             {navItems.map((item) => (
-              <Button
+              <button
                 key={item.id}
-                color="inherit"
+                type="button"
+                className={`nav-link${active === item.id ? " active" : ""}`}
                 onClick={() => scrollToSection(item.id)}
-                sx={{
-                  "&:hover": { color: "#00ffff" },
-                  transition: "0.3s",
-                }}
               >
                 {item.label}
-              </Button>
+              </button>
             ))}
           </Box>
 
-          {/* Mobile Hamburger */}
           <IconButton
-            color="inherit"
             edge="start"
-            sx={{ display: { sm: "none" } }}
-            onClick={handleDrawerToggle}
+            onClick={() => setMobileOpen(true)}
+            sx={{
+              display: { md: "none" },
+              color: "var(--espresso)",
+              background: "var(--beige)",
+              border: "1px solid var(--taupe)",
+              "&:hover": { background: "var(--beige-deep)" },
+            }}
           >
             <MenuIcon />
           </IconButton>
         </Toolbar>
       </AppBar>
 
-      {/* Drawer for Mobile */}
       <Drawer
         anchor="right"
         open={mobileOpen}
-        onClose={handleDrawerToggle}
+        onClose={() => setMobileOpen(false)}
         sx={{
-          "& .MuiDrawer-paper": {
-            width: 240,
-            background: "rgba(0,0,0,0.95)",
-            color: "#fff",
+          "& .MuiDrawer-paper": { width: 280, background: "var(--cream)" },
+          "& .MuiBackdrop-root": {
+            background: "rgba(0,0,0,0.55)",
+            backdropFilter: "blur(2px)",
           },
         }}
       >
+        <Box sx={{ position: "absolute", top: 14, right: 14 }}>
+          <IconButton
+            onClick={() => setMobileOpen(false)}
+            sx={{ color: "var(--espresso)" }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </Box>
         {drawer}
       </Drawer>
     </>

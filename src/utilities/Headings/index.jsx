@@ -1,26 +1,58 @@
-import React from "react";
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
-export default function SoftHeading({ children, ...props }) {
+export default function Headings({ children, kicker, align = "center", ...props }) {
   return (
-    <Typography
-      variant="h2"
+    <Box
       sx={{
-        fontWeight: 700,
-        color: "#e0e0e0", // soft off-white
-        mb: 4,
-        letterSpacing: 1,
-        lineHeight: 1.2,
-        textShadow: `
-          0 0 2px #a0ffff33,  /* very subtle cyan glow */
-          0 0 3px #ffb0ff22   /* very subtle purple glow */
-        `,
-        fontSize: { xs: "1.8rem", md: "3rem" },
-        transition: "text-shadow 0.5s ease",
+        textAlign: align,
+        mb: { xs: 5, md: 7 },
+        px: 1,
+        position: "relative",
+        zIndex: 2,
       }}
       {...props}
     >
-      {children}
-    </Typography>
+      {kicker ? (
+        <Typography
+          className="script"
+          sx={{ display: "block", mb: 1.2 }}
+        >
+          {kicker}
+        </Typography>
+      ) : null}
+
+      <Typography
+        variant="h2"
+        sx={{
+          fontFamily: "var(--font-serif)",
+          fontWeight: 620,
+          color: "var(--espresso)",
+          fontSize: { xs: "2rem", md: "3rem" },
+          lineHeight: 1.12,
+          letterSpacing: "-0.015em",
+          display: "inline-block",
+        }}
+      >
+        {children}
+      </Typography>
+
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: align === "center" ? "center" : "flex-start",
+          mt: 1.4,
+          ml: align === "center" ? 0 : "2px",
+        }}
+      >
+        <Box
+          sx={{
+            width: 64,
+            height: 3,
+            borderRadius: "999px",
+            background: "linear-gradient(90deg, var(--terracotta), var(--peach))",
+          }}
+        />
+      </Box>
+    </Box>
   );
 }

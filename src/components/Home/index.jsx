@@ -1,158 +1,436 @@
-import React, { useState } from "react";
-import { Box, Typography, Button, Avatar, Tooltip } from "@mui/material";
+import { useEffect, useRef, useState } from "react";
+import { Box, Container, Typography, Tooltip } from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
-import Headings from "../../utilities/Headings";
-import TypewriterHeading from "../../utilities/TypeWriterHeading";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import GradientButton from "../../utilities/GradientButton";
+
+const roles = [
+  "full-stack engineer",
+  "MERN stack builder",
+  "react & node.js",
+  "API & database glue",
+];
+
+function useParallax(speed = 0.12) {
+  const ref = useRef(null);
+  useEffect(() => {
+    let raf;
+    const onScroll = () => {
+      const el = ref.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      if (rect.bottom < -200 || rect.top > window.innerHeight + 200) return;
+      raf = requestAnimationFrame(() => {
+        el.style.transform = `translate3d(0, ${rect.top * speed}px, 0)`;
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, [speed]);
+  return ref;
+}
+
+function Typewriter() {
+  const [text, setText] = useState("");
+  const [index] = useState(0);
+
+  useEffect(() => {
+    let word = 0;
+    let char = 0;
+    let deleting = false;
+    let timer;
+
+    const loop = () => {
+      const current = roles[word % roles.length];
+      if (!deleting) {
+        char += 1;
+        setText(current.slice(0, char));
+        if (char === current.length) {
+          deleting = true;
+          timer = setTimeout(loop, 2000);
+          return;
+        }
+        timer = setTimeout(loop, 70);
+      } else {
+        char -= 1;
+        setText(current.slice(0, char));
+        if (char === 0) {
+          deleting = false;
+          word += 1;
+          timer = setTimeout(loop, 350);
+          return;
+        }
+        timer = setTimeout(loop, 34);
+      }
+    };
+
+    loop();
+    return () => clearTimeout(timer);
+  }, [index]);
+
+  return (
+    <Typography
+      component="span"
+      sx={{
+        fontFamily: "var(--font-mono)",
+        color: "var(--terracotta)",
+        fontSize: { xs: "1rem", md: "1.1rem" },
+        letterSpacing: "0.02em",
+        lineHeight: 1.4,
+        display: "inline-block",
+        minHeight: "1.6rem",
+      }}
+    >
+      {"// "}
+      {text}
+      <span className="type-caret" aria-hidden="true" />
+    </Typography>
+  );
+}
 
 export default function Home() {
   const [copied, setCopied] = useState(false);
+  const blobRef = useRef(null);
+  const parallaxRef = useParallax(0.14);
+
+  useEffect(() => {
+    const blobs = blobRef.current?.querySelectorAll(".blob");
+    if (!blobs) return;
+    let raf;
+    const onScroll = () => {
+      raf = requestAnimationFrame(() => {
+        const { scrollY } = window;
+        if (blobs[0]) blobs[0].style.transform = `translate3d(0, ${scrollY * 0.16}px, 0)`;
+        if (blobs[1]) blobs[1].style.transform = `translate3d(0, ${scrollY * -0.1}px, 0)`;
+        if (blobs[2]) blobs[2].style.transform = `translate3d(0, ${scrollY * 0.06}px, 0)`;
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
 
   const handleCopy = () => {
     navigator.clipboard.writeText("bipin.pariyar2002@gmail.com");
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000); // reset after 2 seconds
+    setTimeout(() => setCopied(false), 2000);
   };
+
   return (
     <Box
+      id="home"
+      component="section"
       sx={{
-        minHeight: "calc(100vh)",
+        position: "relative",
+        minHeight: "100vh",
         display: "flex",
-        justifyContent: "center",
-        flexDirection: { xs: "column-reverse", md: "row" },
         alignItems: "center",
-        px: { xs: 2, md: 9 },
-        pt: { xs: 16, md: 12 },
-        gap: { xs: 4, md: 0 },
+        overflow: "hidden",
+        pt: { xs: 16, md: 8 },
+        pb: { xs: 9, md: 0 },
       }}
     >
-      {/* Left: Text */}
       <Box
-        sx={{
-          flex: 1,
-          textAlign: { xs: "center", md: "left" },
-        }}
+        ref={blobRef}
+        sx={{ position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none" }}
+        aria-hidden="true"
       >
-        <TypewriterHeading> Hi, I&apos;m Bipin Pariyar</TypewriterHeading>
+        <div
+          className="blob blob--terracotta"
+          style={{ width: 440, height: 440, top: "-8%", right: "-6%", opacity: 0.5 }}
+        />
+        <div
+          className="blob blob--sage"
+          style={{ width: 400, height: 400, bottom: "-4%", left: "-8%", opacity: 0.42 }}
+        />
+        <div
+          className="blob blob--peach"
+          style={{ width: 320, height: 320, top: "34%", left: "36%", opacity: 0.4 }}
+        />
+      </Box>
 
-        <Typography
-          variant="h5"
-          sx={{
-            fontWeight: 400,
-            color: "#b0b0b0",
-            mb: 4,
-            textShadow: "0 0 4px #ffffff",
-            fontSize: { xs: "1rem", md: "1.25rem" },
-          }}
-        >
-          I build modern web applications and immersive user experiences.
-        </Typography>
-
+      <Container maxWidth="lg" sx={{ position: "relative", zIndex: 1 }}>
         <Box
           sx={{
-            display: "flex",
-            flexDirection: "column",
-            gap: 2,
-
-            alignItems: { xs: "center", md: "flex-start" },
+            display: "grid",
+            gridTemplateColumns: { xs: "1fr", md: "1.1fr 0.9fr" },
+            gap: { xs: 7, md: 4 },
+            alignItems: "center",
           }}
         >
-          <GradientButton
-            onClick={() => {
-              const projectsSection = document.getElementById("projects");
-              projectsSection?.scrollIntoView({ behavior: "smooth" });
-            }}
-          >
-            Explore My Work
-          </GradientButton>
-          <a
-            href="/Bipin_CV.pdf"
-            download="Bipin_Resume.pdf"
-            style={{ textDecoration: "none" }}
-          >
-            <GradientButton startIcon={<DownloadIcon />}>Download Resume</GradientButton>
-          </a>
-          <Tooltip title={copied ? "Copied!" : "Click to copy email"} arrow>
+          {/* left · copy */}
+          <Box sx={{ textAlign: { xs: "center", md: "left" } }}>
+            <Box
+              sx={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 1.2,
+                px: 1.6,
+                py: 0.8,
+                borderRadius: "999px",
+                background: "rgba(18, 44, 35, 0.25)",
+                border: "1px solid var(--taupe)",
+                mb: 3.5,
+              }}
+            >
+              <span className="script" style={{ color: "var(--espresso)" }}>
+                status
+              </span>
+              <span
+                className="script"
+                style={{
+                  color: "var(--sage)",
+                  fontWeight: 800,
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 8,
+                }}
+              >
+                <span
+                  style={{
+                    width: 8,
+                    height: 8,
+                    borderRadius: "50%",
+                    background: "var(--sage)",
+                    boxShadow: "0 0 0 4px rgba(147,164,110,0.2)",
+                  }}
+                />
+                open to work
+              </span>
+            </Box>
+
+            <Typography
+              variant="h1"
+              sx={{
+                fontFamily: "var(--font-serif)",
+                fontWeight: 630,
+                fontSize: { xs: "2.6rem", md: "4.2rem" },
+                lineHeight: 1.05,
+                color: "var(--espresso)",
+                letterSpacing: "-0.02em",
+                mb: 2.5,
+              }}
+            >
+              Hi, I&apos;m{" "}
+              <Typography
+                component="span"
+                sx={{
+                  fontStyle: "italic",
+                  color: "var(--terracotta)",
+                  fontFamily: "var(--font-serif)",
+                  fontSize: "inherit",
+                  fontWeight: "inherit",
+                }}
+              >
+                Bipin
+              </Typography>
+              <br />
+              I build web apps that ship.*
+              <Box
+                component="span"
+                sx={{
+                  display: "block",
+                  fontFamily: "var(--font-mono)",
+                  fontStyle: "normal",
+                  fontWeight: 400,
+                  fontSize: { xs: "0.75rem", md: "0.85rem" },
+                  color: "var(--mocha)",
+                  letterSpacing: "0.02em",
+                  mt: 1.5,
+                  textTransform: "none",
+                }}
+              >
+                *fast, reliable, and honestly a little warm.
+              </Box>
+            </Typography>
+
+            <Box sx={{ mb: 3 }}>
+              <Typewriter />
+            </Box>
+
             <Typography
               sx={{
-                color: "#b0b0b0",
-                cursor: "pointer",
-                "&:hover": { color: "#fff" },
-                transition: "color 0.3s ease",
+                color: "var(--mocha)",
+                fontSize: { xs: "1rem", md: "1.08rem" },
+                lineHeight: 1.75,
+                maxWidth: 520,
+                mb: 5,
+                mx: { xs: "auto", md: 0 },
               }}
-              onClick={handleCopy}
             >
-              bipin.pariyar2002@gmail.com
+              Full-stack engineer working across the MERN stack — API, database and
+              interface — from first commit to deployment. I like the whole loop,
+              and I sweat the details in between.
             </Typography>
-          </Tooltip>{" "}
-        </Box>
-      </Box>
 
-      {/* Right: Avatar with 3D effect & chat bubble */}
-      <Box
-        sx={{
-          flex: { xs: "unset", md: 1 },
-          display: "flex",
-          justifyContent: { xs: "center", md: "center" },
-          mt: { xs: 6, md: 0 },
-          position: "relative",
-        }}
-      >
-        {/* Avatar */}
-        <Avatar
-          alt="Bipin Pariyar"
-          src="/cartoon-profile.png"
-          sx={{
-            width: { xs: 180, sm: 220, md: 300 },
-            height: { xs: 180, sm: 220, md: 300 },
-            border: "4px solid #00ffff",
-            transform: "perspective(1000px) rotateY(10deg) rotateX(5deg)",
-            transition: "transform 0.6s ease, box-shadow 0.6s ease",
-            boxShadow: "0 8px 20px rgba(0, 255, 255, 0.5)",
-            animation: "float 3s ease-in-out infinite",
-            "&:hover": {
-              transform: "perspective(1000px) rotateY(0deg) rotateX(0deg) scale(1.05)",
-              boxShadow: "0 12px 40px rgba(255, 0, 255, 0.7)",
-            },
-            "&:hover + .chat-bubble": {
-              opacity: 1,
-              transform: "translateY(0)",
-            },
-          }}
-        />
+            <Box
+              sx={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: 2,
+                justifyContent: { xs: "center", md: "flex-start" },
+                alignItems: "center",
+                mb: 4.5,
+              }}
+            >
+              <GradientButton
+                onClick={() => {
+                  document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
+                }}
+              >
+                See my work
+              </GradientButton>
+              <a
+                href="/Bipin_CV.pdf"
+                download="Bipin_Resume.pdf"
+                style={{ textDecoration: "none" }}
+              >
+                <GradientButton variant="outline" startIcon={<DownloadIcon />}>
+                  Download CV
+                </GradientButton>
+              </a>
+            </Box>
 
-        {/* Chat Bubble */}
-        <Box
-          className="chat-bubble"
-          sx={{
-            position: "absolute",
-            top: -60,
-            background: "rgba(0, 0, 0, 0.8)",
-            color: "#fff",
-            px: 2,
-            py: 1,
-            borderRadius: "12px",
-            fontSize: "0.9rem",
-            whiteSpace: "nowrap",
-            boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
-            opacity: 0,
-            transform: "translateY(10px)",
-            transition: "opacity 0.6s ease, transform 0.6s ease",
-            "&::after": {
-              content: '""',
-              position: "absolute",
-              bottom: -8,
-              left: "50%",
-              transform: "translateX(-50%)",
-              borderWidth: "8px",
-              borderStyle: "solid",
-              borderColor: "rgba(0,0,0,0.8) transparent transparent transparent",
-            },
-          }}
-        >
-          👋 Exploring my work? You’re in the right place!
+            <Box
+              sx={{
+                display: "flex",
+                gap: 2.5,
+                justifyContent: { xs: "center", md: "flex-start" },
+                alignItems: "center",
+              }}
+            >
+              <Tooltip title={copied ? "copied" : "click to copy"} arrow>
+                <Box
+                  onClick={handleCopy}
+                  data-cursor
+                  sx={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 1,
+                    color: "var(--mocha)",
+                    cursor: "pointer",
+                    borderBottom: "1px dashed var(--taupe)",
+                    pb: 0.3,
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "0.85rem",
+                    "&:hover": { color: "var(--terracotta)" },
+                    transition: "color 0.3s ease",
+                  }}
+                >
+                  <MailOutlineIcon fontSize="small" sx={{ color: "var(--gold)" }} />
+                  bipin.pariyar2002@gmail.com
+                </Box>
+              </Tooltip>
+              <Box sx={{ display: "flex", gap: 1.6 }}>
+                <a className="social-btn" href="https://github.com/bipin-Pariyar2003" target="_blank" rel="noreferrer" aria-label="GitHub">
+                  <GitHubIcon sx={{ fontSize: 20 }} />
+                </a>
+                <a className="social-btn" href="https://www.linkedin.com/in/bipin-pariyar-767782208/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+                  <LinkedInIcon sx={{ fontSize: 20 }} />
+                </a>
+              </Box>
+            </Box>
+          </Box>
+
+          {/* right · polaroid */}
+          <Box
+            ref={parallaxRef}
+            sx={{
+              position: "relative",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              px: { xs: 4, md: 0 },
+            }}
+          >
+            <Box
+              className="polaroid floaty"
+              sx={{
+                maxWidth: { xs: 260, sm: 310, md: 350 },
+                width: "100%",
+                "--rot": "-2deg",
+                transform: "rotate(-2deg)",
+              }}
+            >
+              <Box
+                className="tape"
+                sx={{ top: -11, left: { xs: 12, md: 18 }, transform: "rotate(-7deg)" }}
+              />
+              <Box
+                className="tape"
+                sx={{ top: -11, right: { xs: 12, md: 18 }, transform: "rotate(7deg)" }}
+              />
+              <img src="/bipin-profile.png" alt="Bipin Pariyar" />
+              <Box className="polaroid-caption">bipin / fullstack engineer</Box>
+            </Box>
+
+            <Box
+              className="script"
+              sx={{
+                position: "absolute",
+                top: { xs: "-5%", md: "-4%" },
+                right: { xs: "0%", md: "-2%" },
+                color: "var(--mocha)",
+                background: "var(--input-bg)",
+                border: "1px solid var(--taupe)",
+                borderRadius: "999px",
+                px: 1.4,
+                py: 0.6,
+                transform: "rotate(4deg)",
+              }}
+            >
+              portfolio · v2
+            </Box>
+
+            <Box
+              className="script"
+              sx={{
+                position: "absolute",
+                bottom: "8%",
+                left: { xs: "-2%", md: "-6%" },
+                color: "var(--terracotta)",
+                transform: "rotate(-5deg)",
+              }}
+            >
+              02002_restart
+            </Box>
+          </Box>
         </Box>
-      </Box>
+
+        <Box sx={{ display: { xs: "none", md: "flex" }, justifyContent: "center", mt: 7 }}>
+          <Box
+            onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
+            data-cursor
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              flexDirection: "column",
+              gap: 0.6,
+              color: "var(--mocha)",
+              fontFamily: "var(--font-mono)",
+              fontSize: "0.75rem",
+              letterSpacing: "0.14em",
+              textTransform: "uppercase",
+              "&:hover": { color: "var(--terracotta)" },
+              transition: "color 0.3s ease",
+              cursor: "pointer",
+            }}
+          >
+            scroll
+            <ArrowDownwardIcon sx={{ animation: "bob 2s ease-in-out infinite", "--rot": "0deg", fontSize: 20 }} />
+          </Box>
+        </Box>
+      </Container>
     </Box>
   );
 }

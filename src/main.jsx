@@ -3,20 +3,17 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
 import theme from "./theme.js";
-import { ThemeProvider, CssBaseline, Box } from "@mui/material";
-import Cursor from "./utilities/Cursor/index.jsx";
+import { ThemeProvider, CssBaseline } from "@mui/material";
+import CustomCursor from "./utilities/CustomCursor/index.jsx";
+import ScrollProgress from "./utilities/ScrollProgress/index.jsx";
 
 createRoot(document.getElementById("root")).render(
-  <ThemeProvider theme={theme}>
-    <CssBaseline />
-    <Cursor />
-    <Box
-      sx={{
-        minHeight: "100vh",
-        background: "linear-gradient(135deg, #000000, #434343)", // gradient here
-      }}
-    >
+  <StrictMode>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <ScrollProgress />
+      <CustomCursor />
       <App />
-    </Box>
-  </ThemeProvider>
+    </ThemeProvider>
+  </StrictMode>
 );

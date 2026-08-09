@@ -13,8 +13,8 @@ export default defineConfig({
         name: "Bipin Pariyar Portfolio",
         short_name: "BipinPortfolio",
         description: "Portfolio of Bipin Pariyar",
-        theme_color: "#000000",
-        background_color: "#000000",
+        theme_color: "#16110C",
+        background_color: "#14100B",
         display: "standalone",
         start_url: "/",
         icons: [

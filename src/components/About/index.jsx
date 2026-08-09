@@ -1,89 +1,132 @@
-import React from "react";
-import { Box, Typography, Grid, Avatar } from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import Headings from "../../utilities/Headings";
+import FadeIn from "../../utilities/FadeIn";
+
+const focuses = [
+  "MERN stack",
+  "REST API design",
+  "clean component code",
+  "PWA & offline",
+  "auth & sessions",
+  "web performance",
+  "dev tooling",
+  "docs that don't rot",
+];
 
 export default function About() {
   return (
-    <Box
-      sx={{
-        minHeight: "100vh",
-        py: 10,
-        px: 4,
-        background: "linear-gradient(135deg, #000000, #434343)", // dark gradient
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
-    >
-      <Headings>About Me</Headings>
-
-      <Grid
-        container
-        spacing={4}
-        alignItems="center"
-        justifyContent="center"
-        sx={{ maxWidth: "900px" }}
+    <Box component="section" id="about" className="section">
+      <Box
+        sx={{ position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none" }}
+        aria-hidden="true"
       >
-        {/* Profile Image */}
-        <Grid item xs={12} md={4} sx={{ textAlign: "center" }}>
-          <Avatar
-            src="/bipin.jpg" // replace with your image
-            alt="Bipin Pariyar"
-            sx={{
-              width: { xs: 150, md: 200 },
-              height: { xs: 150, md: 200 },
-              margin: "0 auto",
-              border: "4px solid rgba(255,255,255,0.3)",
-              boxShadow: "0 0 12px rgba(255,255,255,0.2)",
-            }}
-          />
-        </Grid>
+        <div
+          className="blob blob--terracotta"
+          style={{ width: 380, height: 380, bottom: "-14%", right: "-8%", opacity: 0.45 }}
+        />
+      </Box>
 
-        {/* About Text */}
-        <Grid item xs={12} md={8}>
-          <Box
-            sx={{
-              p: 4,
-              borderRadius: "20px",
-              background: "rgba(255,255,255,0.05)",
-              backdropFilter: "blur(15px)",
-              WebkitBackdropFilter: "blur(15px)",
-              border: "1px solid rgba(255,255,255,0.1)",
-              boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
-            }}
-          >
-            <Typography
-              variant="h5"
-              sx={{
-                color: "#ffffff",
-                mb: 2,
-                fontWeight: 600,
-              }}
-            >
-              Hello, I&apos;m Bipin Pariyar
-            </Typography>
+      <Container maxWidth="lg" sx={{ position: "relative", zIndex: 1 }}>
+        <FadeIn>
+          <Headings kicker="// about-me.ts">About me</Headings>
+        </FadeIn>
 
-            <Typography
-              variant="body1"
-              sx={{
-                color: "#b0b0b0",
-                lineHeight: 1.8,
-                fontSize: "1rem",
-              }}
-            >
-              I am a passionate software developer with experience in web development,
-              UI/UX design, and full-stack applications. I love building modern,
-              interactive, and visually appealing web apps that provide smooth user
-              experiences.
-              <br />
-              <br />
-              My skills include React, Redux, MUI, JavaScript, Python, and MERN stack
-              development. I enjoy learning new technologies and exploring innovative ways
-              to create beautiful and functional digital products.
-            </Typography>
-          </Box>
+        <Grid
+          container
+          spacing={{ xs: 7, md: 9 }}
+          alignItems="center"
+          justifyContent="center"
+        >
+          {/* photo */}
+          <Grid item xs={12} md={5} sx={{ textAlign: "center" }}>
+            <FadeIn delay={80}>
+              <Box sx={{ position: "relative", display: "inline-block", my: 2 }}>
+                <Box
+                  sx={{
+                    position: "absolute",
+                    inset: "-20px",
+                    borderRadius: "999px",
+                    border: "2px dashed var(--taupe)",
+                    opacity: 0.7,
+                    transform: "rotate(-5deg)",
+                  }}
+                />
+                <Box
+                  className="polaroid"
+                  sx={{
+                    maxWidth: 320,
+                    width: "100%",
+                    transform: "rotate(2deg)",
+                    "--rot": "2deg",
+                    animation: "none",
+                  }}
+                >
+                  <Box className="tape" sx={{ top: -11, left: 14, transform: "rotate(-7deg)" }} />
+                  <Box className="tape" sx={{ top: -10, right: 12, transform: "rotate(6deg)" }} />
+                  <img src="/bipin-profile.png" alt="Bipin Pariyar" />
+                  <Box className="polaroid-caption">working · probably middle of state</Box>
+                </Box>
+              </Box>
+            </FadeIn>
+          </Grid>
+
+          {/* bio */}
+          <Grid item xs={12} md={7}>
+            <FadeIn delay={120}>
+              <Typography
+                variant="h3"
+                sx={{
+                  fontFamily: "var(--font-serif)",
+                  fontSize: { xs: "1.6rem", md: "2rem" },
+                  color: "var(--espresso)",
+                  lineHeight: 1.25,
+                  mb: 2.5,
+                }}
+              >
+                I&apos;m Bipin — a full-stack engineer who thinks software should be{" "}
+                <Typography
+                  component="span"
+                  sx={{
+                    fontStyle: "italic",
+                    color: "var(--terracotta)",
+                    fontFamily: "var(--font-serif)",
+                    fontSize: "inherit",
+                  }}
+                >
+                  predictable and pleasant.
+                </Typography>
+              </Typography>
+
+              <Typography
+                sx={{ color: "var(--mocha)", lineHeight: 1.85, fontSize: "1rem", mb: 2 }}
+              >
+                I mostly work with the MERN stack, plus a little Python/Django on the
+                side. I care about the unglamorous stuff — predictable state,
+                reasonable bundle sizes, sensible folder structure — because that is
+                what makes a product feel solid.
+              </Typography>
+              <Typography
+                sx={{ color: "var(--mocha)", lineHeight: 1.85, fontSize: "1rem", mb: 4 }}
+              >
+                When I&apos;m not shipping, I&apos;m reading about systems I want to run
+                in production someday, or refactoring a side project for the third
+                time this month.
+              </Typography>
+
+              <Box className="script" sx={{ mb: 2.5 }}>
+                currently focused on
+              </Box>
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, maxWidth: 480 }}>
+                {focuses.map((skill) => (
+                  <span key={skill} className="tag tag--sage">
+                    {skill}
+                  </span>
+                ))}
+              </Box>
+            </FadeIn>
+          </Grid>
         </Grid>
-      </Grid>
+      </Container>
     </Box>
   );
 }
