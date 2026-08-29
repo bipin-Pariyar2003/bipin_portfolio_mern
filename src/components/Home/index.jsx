@@ -342,67 +342,58 @@ export default function Home() {
             </Box>
           </Box>
 
-          {/* right · polaroid */}
+          {/* right · holographic projection */}
           <Box
             ref={parallaxRef}
+            className="holo-stage"
             sx={{
               position: "relative",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              px: { xs: 4, md: 0 },
+              px: { xs: 3, md: 0 },
             }}
           >
-            <Box
-              className="polaroid floaty"
-              sx={{
-                maxWidth: { xs: 260, sm: 310, md: 350 },
-                width: "100%",
-                "--rot": "-2deg",
-                transform: "rotate(-2deg)",
-              }}
-            >
-              <Box
-                className="tape"
-                sx={{ top: -11, left: { xs: 12, md: 18 }, transform: "rotate(-7deg)" }}
-              />
-              <Box
-                className="tape"
-                sx={{ top: -11, right: { xs: 12, md: 18 }, transform: "rotate(7deg)" }}
-              />
-              <img src="/bipin-profile.png" alt="Bipin Pariyar" />
-              <Box className="polaroid-caption">bipin / fullstack engineer</Box>
+            <Box className="holo-glow" aria-hidden="true" />
+
+            <Box className="holo holo-float" sx={{ "--rot": "-3deg" }}>
+              <span className="holo-ring holo-ring--1" />
+              <span className="holo-ring holo-ring--2" />
+              <span className="holo-ring holo-ring--3" />
+              <span className="holo-hud" />
+              <Box className="holo-core">
+                <span className="holo-label">BIPIN</span>
+              </Box>
+              <span className="holo-dot holo-dot--1" />
+              <span className="holo-dot holo-dot--2" />
+              <span className="holo-dot holo-dot--3" />
             </Box>
 
             <Box
-              className="script"
+              className="script holo-chip holo-chip--1"
               sx={{
                 position: "absolute",
-                top: { xs: "-5%", md: "-4%" },
-                right: { xs: "0%", md: "-2%" },
-                color: "var(--mocha)",
+                top: { xs: "4%", md: "8%" },
+                left: { xs: "2%", md: "-4%" },
+              }}
+            >
+              // fullstack
+            </Box>
+            <Box
+              className="script holo-chip holo-chip--2"
+              sx={{
+                position: "absolute",
+                bottom: { xs: "2%", md: "6%" },
+                right: { xs: "2%", md: "-2%" },
+                color: "var(--espresso)",
                 background: "var(--input-bg)",
                 border: "1px solid var(--taupe)",
                 borderRadius: "999px",
                 px: 1.4,
                 py: 0.6,
-                transform: "rotate(4deg)",
               }}
             >
               portfolio · v2
-            </Box>
-
-            <Box
-              className="script"
-              sx={{
-                position: "absolute",
-                bottom: "8%",
-                left: { xs: "-2%", md: "-6%" },
-                color: "var(--terracotta)",
-                transform: "rotate(-5deg)",
-              }}
-            >
-              02002_restart
             </Box>
           </Box>
         </Box>

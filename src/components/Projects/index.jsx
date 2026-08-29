@@ -13,12 +13,15 @@ function ProjectCard({ project, index }) {
     const rect = card.getBoundingClientRect();
     const px = (e.clientX - rect.left) / rect.width - 0.5;
     const py = (e.clientY - rect.top) / rect.height - 0.5;
-    card.style.transform = `perspective(950px) rotateY(${px * 6}deg) rotateX(${-py * 6}deg) translateY(-6px)`;
+    card.style.transition = "transform 0.05s linear";
+    card.style.transform = `perspective(1000px) rotateY(${px * 5}deg) rotateX(${-py * 5}deg) translateY(-6px)`;
   };
 
   const reset = () => {
     const card = cardRef.current;
-    if (card) card.style.transform = "";
+    if (!card) return;
+    card.style.transition = "transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)";
+    card.style.transform = "";
   };
 
   return (
@@ -40,13 +43,13 @@ function ProjectCard({ project, index }) {
               top: 14,
               left: 14,
               zIndex: 3,
-              background: "rgba(20, 16, 11, 0.88)",
-              color: "var(--espresso)",
+              background: "rgba(210, 126, 62, 0.16)",
+              color: "var(--peach)",
               fontWeight: 700,
-              fontSize: "0.75rem",
+              fontSize: "0.72rem",
               fontFamily: "var(--font-mono)",
-              border: "1px solid var(--taupe)",
-              backdropFilter: "blur(4px)",
+              border: "1px solid rgba(210, 126, 62, 0.4)",
+              backdropFilter: "blur(6px)",
             }}
           />
         </Box>
@@ -77,12 +80,15 @@ function ProjectCard({ project, index }) {
             {project.description}
           </Typography>
 
-          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mb: 3 }}>
+          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.8, mb: 3 }}>
             {project.tools.slice(1, 5).map((tool) => (
               <span key={tool} className={`tag ${index % 2 === 0 ? "tag--sage" : "tag--gold"}`}>
                 {tool}
               </span>
             ))}
+            {project.tools.length - 1 > 4 && (
+              <span className="tag tag--terracotta">+{project.tools.length - 5}</span>
+            )}
           </Box>
 
           <a
