@@ -53,7 +53,7 @@ export default function Navbar() {
     <Box
       sx={{
         height: "100%",
-        background: "var(--cream)",
+        background: "var(--bg)",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -62,14 +62,14 @@ export default function Navbar() {
     >
       <Box
         sx={{
-          fontFamily: '"Fraunces", serif',
-          fontWeight: 600,
+          fontFamily: "var(--font-serif)",
+          fontWeight: 700,
           fontSize: "1.5rem",
           color: "var(--espresso)",
           mb: 3,
         }}
       >
-        bipin<span style={{ color: "var(--terracotta)" }}>.</span>
+        bipin<span style={{ color: "var(--cyan)" }}>.</span>
       </Box>
       <List sx={{ width: "100%", px: 2 }}>
         {navItems.map((item) => (
@@ -86,9 +86,10 @@ export default function Navbar() {
                 fontWeight: 600,
                 fontSize: "1rem",
                 "&:hover": {
-                  color: "var(--terracotta)",
-                  background: "var(--beige)",
+                  color: "var(--cyan)",
+                  background: "rgba(0, 229, 255, 0.06)",
                 },
+                ...(active === item.id ? { color: "var(--cyan)" } : {}),
               }}
             >
               <ListItemText primary={item.label} />
@@ -106,11 +107,11 @@ export default function Navbar() {
         elevation={0}
         sx={{
           width: "100%",
-          background: scrolled ? "rgba(20, 16, 12, 0.85)" : "transparent",
-          backdropFilter: scrolled ? "blur(14px)" : "none",
-          WebkitBackdropFilter: scrolled ? "blur(14px)" : "none",
-          borderBottom: scrolled ? "1px solid var(--taupe)" : "none",
-          boxShadow: scrolled ? "0 8px 28px -18px rgba(0,0,0,0.6)" : "none",
+          background: scrolled ? "rgba(10, 10, 15, 0.88)" : "transparent",
+          backdropFilter: scrolled ? "blur(18px)" : "none",
+          WebkitBackdropFilter: scrolled ? "blur(18px)" : "none",
+          borderBottom: scrolled ? "1px solid var(--border)" : "none",
+          boxShadow: scrolled ? "0 8px 32px -18px rgba(0, 229, 255, 0.08)" : "none",
           transition: "background 0.4s ease, box-shadow 0.4s ease",
         }}
       >
@@ -126,16 +127,18 @@ export default function Navbar() {
           <Box
             onClick={() => scrollToSection("home")}
             sx={{
-              fontFamily: '"Fraunces", serif',
-              fontWeight: 600,
+              fontFamily: "var(--font-serif)",
+              fontWeight: 700,
               fontSize: { xs: "1.25rem", md: "1.4rem" },
               color: "var(--espresso)",
               cursor: "pointer",
               userSelect: "none",
               letterSpacing: "-0.01em",
+              "&:hover": { color: "var(--cyan)" },
+              transition: "color 0.3s ease",
             }}
           >
-            bipin<span style={{ color: "var(--terracotta)" }}>.</span>
+            bipin<span style={{ color: "var(--cyan)" }}>.</span>
           </Box>
 
           <Box sx={{ display: { xs: "none", md: "flex" }, gap: { md: 2.5 } }}>
@@ -145,6 +148,9 @@ export default function Navbar() {
                 type="button"
                 className={`nav-link${active === item.id ? " active" : ""}`}
                 onClick={() => scrollToSection(item.id)}
+                style={{
+                  color: active === item.id ? "var(--cyan)" : undefined,
+                }}
               >
                 {item.label}
               </button>
@@ -157,9 +163,13 @@ export default function Navbar() {
             sx={{
               display: { md: "none" },
               color: "var(--espresso)",
-              background: "var(--beige)",
-              border: "1px solid var(--taupe)",
-              "&:hover": { background: "var(--beige-deep)" },
+              background: "var(--surface)",
+              border: "1px solid var(--border)",
+              "&:hover": {
+                background: "var(--surface-elevated)",
+                borderColor: "var(--cyan)",
+                color: "var(--cyan)",
+              },
             }}
           >
             <MenuIcon />
@@ -172,7 +182,7 @@ export default function Navbar() {
         open={mobileOpen}
         onClose={() => setMobileOpen(false)}
         sx={{
-          "& .MuiDrawer-paper": { width: 280, background: "var(--cream)" },
+          "& .MuiDrawer-paper": { width: 280, background: "var(--bg)" },
           "& .MuiBackdrop-root": {
             background: "rgba(0,0,0,0.55)",
             backdropFilter: "blur(2px)",
@@ -182,7 +192,7 @@ export default function Navbar() {
         <Box sx={{ position: "absolute", top: 14, right: 14 }}>
           <IconButton
             onClick={() => setMobileOpen(false)}
-            sx={{ color: "var(--espresso)" }}
+            sx={{ color: "var(--espresso)", "&:hover": { color: "var(--cyan)" } }}
           >
             <CloseIcon />
           </IconButton>

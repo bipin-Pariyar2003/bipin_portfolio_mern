@@ -9,6 +9,8 @@ import Footer from "./components/Footer";
 function App() {
   return (
     <>
+      <div className="glitch-overlay" aria-hidden="true" />
+      <div className="scan-line" aria-hidden="true" />
       <Navbar />
       <Home />
       <Projects />

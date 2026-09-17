@@ -1,16 +1,17 @@
 import { createTheme } from "@mui/material/styles";
 
 const palette = {
-  cream: "#16110C",
-  beige: "#221A12",
-  taupe: "#3A2F24",
-  espresso: "#F2E6D6",
-  mocha: "#A89985",
-  terracotta: "#D27E3E",
-  peach: "#E9A35E",
-  sage: "#93A46E",
-  gold: "#C89A4F",
-  input: "#1B140E",
+  bg: "#0A0A0F",
+  surface: "#12121A",
+  surfaceElevated: "#1A1A2E",
+  cyan: "#00E5FF",
+  violet: "#7B61FF",
+  mint: "#00FF88",
+  coral: "#FF3D71",
+  gray: "#6B7280",
+  border: "#2A2A3E",
+  espresso: "#F0E6D8",
+  mocha: "#6B7280",
 };
 
 const theme = createTheme({
@@ -20,31 +21,34 @@ const theme = createTheme({
   palette: {
     mode: "dark",
     background: {
-      default: palette.cream,
-      paper: "#2B2219",
+      default: palette.bg,
+      paper: palette.surface,
     },
     text: {
       primary: palette.espresso,
       secondary: palette.mocha,
     },
     primary: {
-      main: palette.terracotta,
-      light: palette.peach,
+      main: palette.cyan,
+      light: palette.violet,
     },
     secondary: {
-      main: "#B47A5A",
+      main: palette.mint,
+    },
+    error: {
+      main: palette.coral,
     },
   },
   shape: {
     borderRadius: 16,
   },
   typography: {
-    fontFamily: '"Manrope", "Inter", sans-serif',
-    h1: { fontFamily: '"Fraunces", Georgia, serif', fontWeight: 600 },
-    h2: { fontFamily: '"Fraunces", Georgia, serif', fontWeight: 600 },
-    h3: { fontFamily: '"Fraunces", Georgia, serif', fontWeight: 600 },
-    h4: { fontFamily: '"Fraunces", Georgia, serif', fontWeight: 600 },
-    h5: { fontFamily: '"Fraunces", Georgia, serif', fontWeight: 600 },
+    fontFamily: '"Inter", "Space Grotesk", sans-serif',
+    h1: { fontFamily: '"Space Grotesk", sans-serif', fontWeight: 700 },
+    h2: { fontFamily: '"Space Grotesk", sans-serif', fontWeight: 700 },
+    h3: { fontFamily: '"Space Grotesk", sans-serif', fontWeight: 700 },
+    h4: { fontFamily: '"Space Grotesk", sans-serif', fontWeight: 700 },
+    h5: { fontFamily: '"Space Grotesk", sans-serif', fontWeight: 700 },
     button: { textTransform: "none", fontWeight: 700 },
     overline: { fontFamily: '"JetBrains Mono", monospace' },
   },
@@ -52,8 +56,30 @@ const theme = createTheme({
     MuiCssBaseline: {
       styleOverrides: {
         body: {
-          backgroundColor: palette.cream,
+          backgroundColor: palette.bg,
           color: palette.espresso,
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          "& fieldset": { borderColor: palette.border },
+          "&:hover fieldset": { borderColor: palette.violet },
+          "&.Mui-focused fieldset": { borderColor: palette.cyan, borderWidth: 2 },
+          "&.Mui-focused": { boxShadow: `0 0 0 4px rgba(0, 229, 255, 0.1)` },
+        },
+        input: {
+          color: palette.espresso,
+          fontFamily: '"Inter", sans-serif',
+        },
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          color: palette.mocha,
+          "&.Mui-focused": { color: palette.cyan },
         },
       },
     },

@@ -8,16 +8,11 @@ export default function Cursor() {
   useEffect(() => {
     const move = (e) => {
       setPosition({ x: e.clientX, y: e.clientY });
-
-      // Add a smaller, subtle trail dot
       setTrail((prev) => [...prev, { x: e.clientX, y: e.clientY, opacity: 1 }]);
-
-      // Keep last 12 dots for thinner tail
       if (trail.length > 12) {
         setTrail((prev) => prev.slice(prev.length - 12));
       }
     };
-
     const down = () => setClicked(true);
     const up = () => setClicked(false);
 
@@ -43,7 +38,6 @@ export default function Cursor() {
 
   return (
     <>
-      {/* Trail */}
       {trail.map((dot, idx) => (
         <div
           key={idx}
@@ -51,20 +45,18 @@ export default function Cursor() {
             position: "fixed",
             top: dot.y,
             left: dot.x,
-            width: 6, // thinner
-            height: 6, // thinner
+            width: 6,
+            height: 6,
             transform: "translate(-50%, -50%)",
             borderRadius: "50%",
             pointerEvents: "none",
-            background: `rgba(200, 200, 200, ${dot.opacity})`,
-            boxShadow: `0 0 4px rgba(200,200,200,${dot.opacity}), 0 0 8px rgba(200,200,200,${dot.opacity})`,
+            background: `rgba(0, 229, 255, ${dot.opacity * 0.8})`,
+            boxShadow: `0 0 4px rgba(0,229,255,${dot.opacity}), 0 0 8px rgba(0,229,255,${dot.opacity})`,
             zIndex: 9998,
             transition: "all 0.4s ease-out",
           }}
         />
       ))}
-
-      {/* Main Cursor */}
       <div
         style={{
           position: "fixed",
@@ -75,12 +67,12 @@ export default function Cursor() {
           transform: "translate(-50%, -50%)",
           borderRadius: "50%",
           pointerEvents: "none",
-          border: "2px solid rgba(200,200,200,0.9)",
-          background: "rgba(200,200,200,0.2)",
+          border: "2px solid rgba(0, 229, 255, 0.9)",
+          background: "rgba(0, 229, 255, 0.2)",
           transition: "width 0.5s ease, height 0.5s ease, background 0.5s",
           zIndex: 9999,
           mixBlendMode: "difference",
-          boxShadow: "0 0 6px rgba(200,200,200,0.5), 0 0 12px rgba(200,200,200,0.3)",
+          boxShadow: "0 0 6px rgba(0,229,255,0.5), 0 0 12px rgba(0,229,255,0.3)",
         }}
       />
     </>

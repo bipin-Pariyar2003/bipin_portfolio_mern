@@ -19,19 +19,19 @@ const socials = [
 const fieldStyles = {
   "& .MuiOutlinedInput-root": {
     borderRadius: "12px",
-    background: "var(--input-bg)",
+    background: "var(--surface)",
     color: "var(--espresso)",
     fontFamily: "var(--font-sans)",
-    transition: "box-shadow 0.3s ease",
-    "& fieldset": { borderColor: "var(--taupe)" },
-    "&:hover fieldset": { borderColor: "var(--peach)" },
-    "&.Mui-focused fieldset": { borderColor: "var(--terracotta)", borderWidth: 2 },
-    "&.Mui-focused": { boxShadow: "0 0 0 4px rgba(192,126,62,0.15)" },
+    transition: "box-shadow 0.3s ease, border-color 0.3s ease",
+    "& fieldset": { borderColor: "var(--border)" },
+    "&:hover fieldset": { borderColor: "var(--violet)" },
+    "&.Mui-focused fieldset": { borderColor: "var(--cyan)", borderWidth: 2 },
+    "&.Mui-focused": { boxShadow: "0 0 0 4px rgba(0, 229, 255, 0.1)" },
   },
   "& .MuiInputLabel-root": {
     fontFamily: "var(--font-sans)",
     color: "var(--mocha)",
-    "&.Mui-focused": { color: "var(--terracotta)" },
+    "&.Mui-focused": { color: "var(--cyan)" },
   },
 };
 
@@ -45,66 +45,34 @@ export default function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
       showSnackbar("Please fill out all fields before sending.", "warning");
       return;
     }
-
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(form.email)) {
       showSnackbar("Please enter a valid email address.", "warning");
       return;
     }
-
     emailjs
-      .send(
-        "bipin_gmail_1976",
-        "template_u2bao7h",
-        form,
-        "7wcq-gWY8bY03Dgpx"
-      )
+      .send("bipin_gmail_1976", "template_u2bao7h", form, "7wcq-gWY8bY03Dgpx")
       .then(
-        () => {
-          showSnackbar("Message sent — I'll get back to you soon.", "success");
-          setForm({ name: "", email: "", message: "" });
-        },
-        (error) => {
-          console.error(error);
-          showSnackbar("That didn't go through. Please try again later.", "error");
-        }
+        () => { showSnackbar("Message sent — I'll get back to you soon.", "success"); setForm({ name: "", email: "", message: "" }); },
+        (error) => { console.error(error); showSnackbar("That didn't go through. Please try again later.", "error"); }
       );
   };
 
   return (
     <Box component="section" id="contact" className="section">
-      <Box
-        sx={{ position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none" }}
-        aria-hidden="true"
-      >
-        <div
-          className="blob blob--terracotta"
-          style={{ width: 440, height: 440, bottom: "-18%", left: "34%", opacity: 0.42 }}
-        />
+      <Box sx={{ position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none" }} aria-hidden="true">
+        <div className="neon-blob neon-blob--coral" style={{ width: 440, height: 440, bottom: "-18%", left: "34%", opacity: 0.42 }} />
       </Box>
 
       <Container maxWidth="md" sx={{ position: "relative", zIndex: 1 }}>
         <FadeIn>
           <Headings kicker="// contact">Let&apos;s talk</Headings>
-          <Typography
-            sx={{
-              textAlign: "center",
-              color: "var(--mocha)",
-              maxWidth: 500,
-              mx: "auto",
-              mt: -2,
-              mb: 6,
-              fontSize: "1rem",
-              lineHeight: 1.75,
-            }}
-          >
-            Have a project, an open role, or a question about something I built?
-            The form and the email both work. Honest answers, quick replies.
+          <Typography sx={{ textAlign: "center", color: "var(--mocha)", maxWidth: 500, mx: "auto", mt: -2, mb: 6, fontSize: "1rem", lineHeight: 1.75 }}>
+            Have a project, an open role, or a question about something I built? The form and the email both work. Honest answers, quick replies.
           </Typography>
         </FadeIn>
 
@@ -112,98 +80,35 @@ export default function Contact() {
           <Box
             component="form"
             onSubmit={handleSubmit}
-            sx={{
-              p: { xs: 3, md: 5 },
-              borderRadius: "20px",
-              background: "var(--beige)",
-              border: "1px solid var(--taupe)",
-              boxShadow: "0 2px 6px rgba(0,0,0,0.3), 0 30px 60px -30px rgba(0,0,0,0.6)",
-              display: "flex",
-              flexDirection: "column",
-              gap: 3,
-            }}
+            className="glass-card"
+            sx={{ p: { xs: 3, md: 5 }, borderRadius: "20px", display: "flex", flexDirection: "column", gap: 3 }}
           >
-            <TextField
-              required
-              label="Name"
-              name="name"
-              value={form.name}
-              onChange={handleChange}
-              variant="outlined"
-              fullWidth
-              sx={fieldStyles}
-            />
-            <TextField
-              required
-              label="Email"
-              name="email"
-              type="email"
-              value={form.email}
-              onChange={handleChange}
-              variant="outlined"
-              fullWidth
-              sx={fieldStyles}
-            />
-            <TextField
-              required
-              label="Message"
-              name="message"
-              multiline
-              rows={5}
-              value={form.message}
-              onChange={handleChange}
-              variant="outlined"
-              fullWidth
-              sx={fieldStyles}
-            />
+            <TextField required label="Name" name="name" value={form.name} onChange={handleChange} variant="outlined" fullWidth sx={fieldStyles} />
+            <TextField required label="Email" name="email" type="email" value={form.email} onChange={handleChange} variant="outlined" fullWidth sx={fieldStyles} />
+            <TextField required label="Message" name="message" multiline rows={5} value={form.message} onChange={handleChange} variant="outlined" fullWidth sx={fieldStyles} />
             <FadeIn>
               <Box sx={{ textAlign: "center", mt: 1 }}>
-                <GradientButton type="submit">Send message</GradientButton>
+                <GradientButton type="submit" variant="neon">Send message</GradientButton>
               </Box>
             </FadeIn>
-          </Box>
 
-          <Box sx={{ display: "flex", justifyContent: "center", gap: { xs: 2, sm: 2.5 }, mt: 6, mb: 3 }}>
-            {socials.map((s) => (
-              <a
-                key={s.label}
-                className="social-btn"
-                href={s.url}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={s.label}
-              >
-                {s.icon}
-              </a>
-            ))}
-          </Box>
+            <Box sx={{ display: "flex", justifyContent: "center", gap: { xs: 2, sm: 2.5 }, mt: 6, mb: 3 }}>
+              {socials.map((s) => (
+                <a key={s.label} className="neon-social" href={s.url} target="_blank" rel="noreferrer" aria-label={s.label}>
+                  {s.icon}
+                </a>
+              ))}
+            </Box>
 
-          <Typography
-            className="script"
-            sx={{ textAlign: "center", color: "var(--mocha)", lineHeight: 1.6 }}
-          >
-            / or DM me — always happy to talk shop
-          </Typography>
+            <Typography className="script" sx={{ textAlign: "center", color: "var(--mocha)", lineHeight: 1.6 }}>
+              / or DM me — always happy to talk shop
+            </Typography>
+          </Box>
         </FadeIn>
       </Container>
 
-      <Snackbar
-        open={snackbar.open}
-        autoHideDuration={4000}
-        onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-      >
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity={snackbar.severity}
-          variant="filled"
-          sx={{
-            borderRadius: "10px",
-            fontFamily: "var(--font-sans)",
-            fontWeight: 600,
-            fontSize: "0.92rem",
-          }}
-        >
+      <Snackbar open={snackbar.open} autoHideDuration={4000} onClose={handleCloseSnackbar} anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
+        <Alert onClose={handleCloseSnackbar} severity={snackbar.severity} variant="filled" sx={{ borderRadius: "10px", fontFamily: "var(--font-sans)", fontWeight: 600, fontSize: "0.92rem" }}>
           {snackbar.message}
         </Alert>
       </Snackbar>

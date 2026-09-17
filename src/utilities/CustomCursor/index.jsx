@@ -7,33 +7,22 @@ export default function CustomCursor() {
   useEffect(() => {
     if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
 
-    let x = 0;
-    let y = 0;
-    let rx = 0;
-    let ry = 0;
-    let raf;
+    let x = 0, y = 0, rx = 0, ry = 0, raf;
 
     const onMove = (e) => {
-      x = e.clientX;
-      y = e.clientY;
+      x = e.clientX; y = e.clientY;
     };
 
     const onOver = (e) => {
-      const hit = e.target.closest(
-        "a, button, input, textarea, label, [data-cursor], .tag, .card"
-      );
+      const hit = e.target.closest("a, button, input, textarea, label, [data-cursor], .neon-tag, .glass-card");
       document.body.classList.toggle("cursor-hover", Boolean(hit));
     };
 
     const tick = () => {
       rx += (x - rx) * 0.16;
       ry += (y - ry) * 0.16;
-      if (dotRef.current) {
-        dotRef.current.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
-      }
-      if (ringRef.current) {
-        ringRef.current.style.transform = `translate3d(${rx}px, ${ry}px, 0) translate(-50%, -50%)`;
-      }
+      if (dotRef.current) dotRef.current.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
+      if (ringRef.current) ringRef.current.style.transform = `translate3d(${rx}px, ${ry}px, 0) translate(-50%, -50%)`;
       raf = requestAnimationFrame(tick);
     };
 
