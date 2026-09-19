@@ -1,8 +1,26 @@
 import { useRef, useState } from "react";
 import { Box, Container, Grid, Typography, Chip, TextField } from "@mui/material";
+import {
+  SmartToy,
+  Code,
+  ColorLens,
+  CalendarMonth,
+  Brush,
+  ShoppingBag,
+  LocalMall,
+  Task,
+  DateRange,
+} from "@mui/icons-material";
 import projects from "../../utilities/projects";
 import Headings from "../../utilities/Headings";
 import FadeIn from "../../utilities/FadeIn";
+
+const iconMap = {
+  SmartToy, Code, ColorLens, CalendarMonth, Brush,
+  ShoppingBag, LocalMall, Task, DateRange,
+};
+
+const neonColors = ["#00E5FF", "#7B61FF", "#00FF88"];
 
 function ProjectCard({ project, index }) {
   const cardRef = useRef(null);
@@ -24,6 +42,9 @@ function ProjectCard({ project, index }) {
     card.style.transform = "";
   };
 
+  const color = neonColors[index % 3];
+  const IconComp = iconMap[project.icon];
+
   return (
     <FadeIn delay={index * 80} y={20}>
       <Box
@@ -42,41 +63,47 @@ function ProjectCard({ project, index }) {
           maxHeight: "520px",
         }}
       >
-<Box sx={{ position: "relative", borderRadius: "16px 16px 0 0", overflow: "hidden", flexShrink: 0, maxHeight: "200px" }}>
-           <img
-             src={project.image}
-             alt={project.title}
-             loading="lazy"
-             style={{
-               width: "100%",
-               aspectRatio: "16/9",
-               objectFit: "cover",
-               display: "block",
-               transition: "transform 0.5s ease",
-               maxHeight: "200px",
-             }}
-            onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.08)")}
-            onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
-          />
-          <Box
-            sx={{
-              position: "absolute", inset: 0,
-              background: "linear-gradient(to top, rgba(18,18,26,0.9) 0%, transparent 60%)",
-              pointerEvents: "none",
-            }}
-          />
-          <Chip
-            label={project.tools[0]}
-            sx={{
-              position: "absolute", top: 10, left: 10, zIndex: 3,
-              background: "rgba(0, 229, 255, 0.12)", color: "var(--cyan)",
-              fontWeight: 700, fontSize: "0.65rem", fontFamily: "var(--font-mono)",
-              border: "1px solid rgba(0, 229, 255, 0.3)",
-              backdropFilter: "blur(8px)",
-              px: 1.2, py: 0.5,
-            }}
-          />
-        </Box>
+        <Box sx={{ position: "relative", borderRadius: "16px 16px 0 0", overflow: "hidden", flexShrink: 0, height: "200px" }}>
+            <Box
+              sx={{
+                position: "absolute", inset: 0,
+                background: `linear-gradient(135deg, ${color}15 0%, ${color}08 50%, rgba(18,18,26,0.95) 100%)`,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              {IconComp && (
+                <Box
+                  component={IconComp}
+                  sx={{
+                    fontSize: 64,
+                    color: color,
+                    filter: `drop-shadow(0 0 12px ${color}) drop-shadow(0 0 24px ${color}88)`,
+                    opacity: 0.9,
+                  }}
+                />
+              )}
+            </Box>
+            <Box
+              sx={{
+                position: "absolute", inset: 0,
+                background: "linear-gradient(to top, rgba(18,18,26,0.9) 0%, transparent 60%)",
+                pointerEvents: "none",
+              }}
+            />
+            <Chip
+              label={project.tools[0]}
+              sx={{
+                position: "absolute", top: 10, left: 10, zIndex: 3,
+                background: "rgba(0, 229, 255, 0.12)", color: "var(--cyan)",
+                fontWeight: 700, fontSize: "0.65rem", fontFamily: "var(--font-mono)",
+                border: "1px solid rgba(0, 229, 255, 0.3)",
+                backdropFilter: "blur(8px)",
+                px: 1.2, py: 0.5,
+              }}
+            />
+          </Box>
 
         <Box sx={{ p: { xs: 1.5, md: 2 }, display: "flex", flexDirection: "column", flexGrow: 1, gap: 0.5 }}>
           <Typography
