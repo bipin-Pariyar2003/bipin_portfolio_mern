@@ -6,7 +6,6 @@ import FadeIn from "../../utilities/FadeIn";
 
 function ProjectCard({ project, index }) {
   const cardRef = useRef(null);
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
 
   const handleMove = (e) => {
     const card = cardRef.current;
@@ -14,62 +13,116 @@ function ProjectCard({ project, index }) {
     const rect = card.getBoundingClientRect();
     const px = (e.clientX - rect.left) / rect.width - 0.5;
     const py = (e.clientY - rect.top) / rect.height - 0.5;
-    setTilt({ x: px * 5, y: -py * 5 });
-    card.style.transition = "transform 0.05s linear";
-    card.style.transform = `perspective(1000px) rotateY(${px * 5}deg) rotateX(${-py * 5}deg) translateY(-6px)`;
+    card.style.transition = "transform 0.08s ease-out";
+    card.style.transform = `perspective(800px) rotateY(${px * 3}deg) rotateX(${-py * 3}deg) translateY(-4px)`;
   };
 
   const reset = () => {
     const card = cardRef.current;
     if (!card) return;
-    setTilt({ x: 0, y: 0 });
-    card.style.transition = "transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)";
+    card.style.transition = "transform 0.5s cubic-bezier(0.22, 1, 0.36, 1)";
     card.style.transform = "";
   };
 
   return (
-    <FadeIn delay={index * 90} y={30}>
+    <FadeIn delay={index * 80} y={20}>
       <Box
         ref={cardRef}
         className="glass-card neon-border-glow"
         onMouseMove={handleMove}
         onMouseLeave={reset}
         data-cursor
-        sx={{ height: "100%", display: "flex", flexDirection: "column", background: "rgba(18, 18, 26, 0.7)" }}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          background: "rgba(18, 18, 26, 0.65)",
+          borderRadius: "16px",
+          overflow: "hidden",
+          cursor: "pointer",
+          maxHeight: "520px",
+        }}
       >
-        <Box className="stack" sx={{ position: "relative", borderRadius: "20px 20px 0 0", overflow: "hidden", borderBottom: "1px solid var(--border)" }}>
-          <img src={project.image} alt={project.title} loading="lazy" style={{ width: "100%", aspectRatio: "16/10", objectFit: "cover", transition: "transform 0.6s ease" }} />
-          <Box sx={{ position: "absolute", inset: 0, background: "linear-gradient(150deg, rgba(0, 229, 255, 0.15), rgba(18, 18, 26, 0.4) 70%)", transition: "opacity 0.5s ease" }} />
+<Box sx={{ position: "relative", borderRadius: "16px 16px 0 0", overflow: "hidden", flexShrink: 0, maxHeight: "200px" }}>
+           <img
+             src={project.image}
+             alt={project.title}
+             loading="lazy"
+             style={{
+               width: "100%",
+               aspectRatio: "16/9",
+               objectFit: "cover",
+               display: "block",
+               transition: "transform 0.5s ease",
+               maxHeight: "200px",
+             }}
+            onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.08)")}
+            onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+          />
+          <Box
+            sx={{
+              position: "absolute", inset: 0,
+              background: "linear-gradient(to top, rgba(18,18,26,0.9) 0%, transparent 60%)",
+              pointerEvents: "none",
+            }}
+          />
           <Chip
             label={project.tools[0]}
             sx={{
-              position: "absolute", top: 14, left: 14, zIndex: 3,
+              position: "absolute", top: 10, left: 10, zIndex: 3,
               background: "rgba(0, 229, 255, 0.12)", color: "var(--cyan)",
-              fontWeight: 700, fontSize: "0.72rem", fontFamily: "var(--font-mono)",
+              fontWeight: 700, fontSize: "0.65rem", fontFamily: "var(--font-mono)",
               border: "1px solid rgba(0, 229, 255, 0.3)",
-              backdropFilter: "blur(6px)",
+              backdropFilter: "blur(8px)",
+              px: 1.2, py: 0.5,
             }}
           />
         </Box>
 
-        <Box sx={{ p: { xs: 3, md: 3.5 }, display: "flex", flexDirection: "column", flexGrow: 1 }}>
-          <Typography variant="h3" sx={{ fontFamily: "var(--font-serif)", fontSize: { xs: "1.35rem", md: "1.5rem" }, color: "var(--espresso)", mb: 1.2, letterSpacing: "-0.01em" }}>
+        <Box sx={{ p: { xs: 1.5, md: 2 }, display: "flex", flexDirection: "column", flexGrow: 1, gap: 0.5 }}>
+          <Typography
+            variant="h3"
+            sx={{
+              fontFamily: "var(--font-serif)",
+              fontSize: { xs: "0.9rem", md: "1rem" },
+              color: "var(--espresso)",
+              mb: 0.25,
+              letterSpacing: "-0.01em",
+              lineHeight: 1.2,
+            }}
+          >
             {project.title}
           </Typography>
-          <Typography sx={{ color: "var(--mocha)", fontSize: "0.95rem", lineHeight: 1.75, mb: 2.5, flexGrow: 1 }}>
+          <Typography
+            sx={{
+              color: "var(--mocha)",
+              fontSize: "0.72rem",
+              lineHeight: 1.4,
+              mb: 0.75,
+              display: "-webkit-box",
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: "vertical",
+              overflow: "hidden",
+            }}
+          >
             {project.description}
           </Typography>
-          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.8, mb: 3 }}>
-            {project.tools.slice(1, 5).map((tool, ti) => (
-              <span key={tool} className={`neon-tag neon-tag-${index % 3 === 0 ? "cyan" : index % 3 === 1 ? "violet" : "mint"}`} style={{ "--pop-delay": `${ti * 40}ms` }}>
+          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.4, mb: 1 }}>
+            {project.tools.slice(1, 4).map((tool, ti) => (
+              <span key={tool} className={`neon-tag neon-tag-${index % 3 === 0 ? "cyan" : index % 3 === 1 ? "violet" : "mint"}`} style={{ fontSize: "0.58rem", py: 0.2, px: 0.5, "--pop-delay": `${ti * 40}ms` }}>
                 {tool}
               </span>
             ))}
             {project.tools.length - 1 > 4 && (
-              <span className="neon-tag neon-tag--coral">+{project.tools.length - 5}</span>
+              <span className="neon-tag neon-tag--coral" style={{ fontSize: "0.58rem", py: 0.2, px: 0.5 }}>+{project.tools.length - 4}</span>
             )}
           </Box>
-          <a href={project.link !== "#" ? project.link : "#"} target={project.link !== "#" ? "_blank" : undefined} rel="noreferrer" className="ink-link" style={{ alignSelf: "flex-start", marginTop: "auto" }}>
+          <a
+            href={project.link !== "#" ? project.link : "#"}
+            target={project.link !== "#" ? "_blank" : undefined}
+            rel="noreferrer"
+            className="ink-link"
+            style={{ alignSelf: "flex-start", marginTop: "auto", fontSize: "0.75rem" }}
+          >
             View project <span className="arrow">→</span>
           </a>
         </Box>
@@ -90,31 +143,37 @@ export default function Projects() {
   return (
     <Box component="section" id="projects" className="section">
       <Box sx={{ position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none" }} aria-hidden="true">
-        <div className="neon-blob neon-blob--mint" style={{ width: 380, height: 380, top: "-12%", right: "-6%", opacity: 0.4 }} />
-        <div className="neon-blob neon-blob--violet" style={{ width: 340, height: 340, bottom: "-10%", left: "-6%", opacity: 0.35 }} />
+        <div className="neon-blob neon-blob--mint" style={{ width: 380, height: 380, top: "-12%", right: "-6%", opacity: 0.35 }} />
+        <div className="neon-blob neon-blob--violet" style={{ width: 340, height: 340, bottom: "-10%", left: "-6%", opacity: 0.3 }} />
       </Box>
 
-      <Container maxWidth="lg" sx={{ position: "relative", zIndex: 1 }}>
+      <Container maxWidth="lg" sx={{ position: "relative", zIndex: 1, py: { xs: 1, md: 2 } }}>
         <FadeIn>
           <Headings kicker="a few things I've built">Projects</Headings>
         </FadeIn>
 
-        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, justifyContent: "center", mb: 5 }}>
+        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.8, justifyContent: "center", mb: 4 }}>
           {filters.map((f) => (
             <button
               key={f}
               onClick={() => setFilter(f)}
               className={`neon-tag ${filter === f ? "neon-tag--cyan" : "neon-tag--violet"}`}
-              style={{ cursor: "pointer", border: filter === f ? "1px solid rgba(0, 229, 255, 0.4)" : undefined }}
+              style={{
+                cursor: "pointer",
+                border: filter === f ? "1px solid rgba(0, 229, 255, 0.4)" : undefined,
+                fontSize: "0.72rem",
+                py: 0.4, px: 1,
+                background: filter === f ? "rgba(0, 229, 255, 0.1)" : undefined,
+              }}
             >
               {f === "all" ? "All" : f}
             </button>
           ))}
         </Box>
 
-        <Grid container spacing={{ xs: 3.5, md: 4 }}>
+        <Grid container spacing={{ xs: 1.5, md: 2 }}>
           {filtered.map((project, idx) => (
-            <Grid item xs={12} sm={6} lg={4} key={project.title} sx={{ display: "flex" }}>
+            <Grid item xs={12} sm={6} md={4} lg={3} key={project.title} sx={{ display: "flex" }}>
               <ProjectCard project={project} index={idx} />
             </Grid>
           ))}
